@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Algorithm Progress Tracker</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f8f9fa;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        .stats {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-top: 20px;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 2rem;
+            font-weight: bold;
+            display: block;
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+
+        .controls {
+            padding: 25px 30px;
+            border-bottom: 1px solid #e9ecef;
+            background-color: #f8f9fa;
+        }
+
+        .filter-group {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+
+        .filter-group label {
+            font-weight: 600;
+            color: #495057;
+        }
+
+        select,
+        input {
+            padding: 8px 12px;
+            border: 2px solid #dee2e6;
+            border-radius: 6px;
+            font-size: 14px;
+            background: white;
+        }
+
+        select:focus,
+        input:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .legend {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 14px;
+        }
+
+        .legend-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+        }
+
+        .completed {
+            background-color: #28a745;
+        }
+
+        .partially-completed {
+            background-color: #ffc107;
+        }
+
+        .not-completed {
+            background-color: #dc3545;
+        }
+
+        .content {
+            padding: 30px;
+        }
+
+        .category {
+            margin-bottom: 35px;
+        }
+
+        .category-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            padding: 15px 20px;
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            border-radius: 8px;
+            border-left: 4px solid #667eea;
+        }
+
+        .category-title {
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: #495057;
+        }
+
+        .category-stats {
+            display: flex;
+            gap: 10px;
+            font-size: 0.9rem;
+            color: #6c757d;
+        }
+
+        .problems-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 15px;
+        }
+
+        .problem-card {
+            padding: 18px;
+            border: 2px solid #e9ecef;
+            border-radius: 8px;
+            background: white;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .problem-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .problem-card.completed {
+            border-color: #28a745;
+            background-color: #f8fff9;
+        }
+
+        .problem-card.partially-completed {
+            border-color: #ffc107;
+            background-color: #fffcf0;
+        }
+
+        .problem-card.not-completed {
+            border-color: #dee2e6;
+        }
+
+        .problem-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #212529;
+        }
+
+        .problem-frequency {
+            font-size: 0.85rem;
+            color: #6c757d;
+            margin-bottom: 10px;
+        }
+
+        .problem-implementations {
+            display: flex;
+            gap: 8px;
+            margin-top: 10px;
+        }
+
+        .implementation-tag {
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: 500;
+        }
+
+        .python-tag {
+            background-color: #3776ab;
+            color: white;
+        }
+
+        .nodejs-tag {
+            background-color: #339933;
+            color: white;
+        }
+
+        .missing-tag {
+            background-color: #6c757d;
+            color: white;
+            opacity: 0.6;
+        }
+
+        .status-icon {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2rem;
+            }
+
+            .stats {
+                gap: 20px;
+            }
+
+            .filter-group {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
+            }
+
+            .legend {
+                flex-wrap: wrap;
+            }
+
+            .problems-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🎯 Algorithm Progress Tracker</h1>
+            <p>Track your coding practice progress</p>
+            <div class="stats">
+                <div class="stat-item">
+                    <span class="stat-number" id="total-problems">0</span>
+                    <span class="stat-label">Total Problems</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number" id="completed-count">0</span>
+                    <span class="stat-label">Completed</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number" id="completion-percentage">0%</span>
+                    <span class="stat-label">Progress</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="controls">
+            <div class="filter-group">
+                <label for="category-filter">Filter by Category:</label>
+                <select id="category-filter">
+                    <option value="all">All Categories</option>
+                    <option value="arrays-strings">Arrays & Strings</option>
+                    <option value="trees">Trees</option>
+                    <option value="graphs">Graphs</option>
+                    <option value="dynamic-programming">Dynamic Programming</option>
+                    <option value="backtracking">Backtracking</option>
+                    <option value="additional-hard">Additional Hard Problems</option>
+                </select>
+
+                <label for="status-filter">Filter by Status:</label>
+                <select id="status-filter">
+                    <option value="all">All Status</option>
+                    <option value="completed">Completed</option>
+                    <option value="not-completed">Not Started</option>
+                </select>
+
+                <label for="search-input">Search:</label>
+                <input type="text" id="search-input" placeholder="Search problems...">
+            </div>
+
+            <div class="legend">
+                <div class="legend-item">
+                    <div class="legend-dot completed"></div>
+                    <span>Completed (Either Language)</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-dot not-completed"></div>
+                    <span>Not Started</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="content" id="problems-container">
+            <!-- Problems will be dynamically loaded here -->
+        </div>
+    </div>
+
+    <script src="progress-tracker.js"></script>
+</body>
+
+</html>
