@@ -2,71 +2,105 @@
 
 // Problem URLs from the question bank HTML file
 const problemUrls = {
-    'container-with-most-water': 'https://leetcode.com/problems/container-with-most-water/',
-    'trapping-rain-water': 'https://leetcode.com/problems/trapping-rain-water/',
-    '3sum': 'https://leetcode.com/problems/3sum/',
-    'longest-substring-without-repeating-characters': 'https://leetcode.com/problems/longest-substring-without-repeating-characters/',
-    'minimum-window-substring': 'https://leetcode.com/problems/minimum-window-substring/',
-    'subarray-sum-equals-k': 'https://leetcode.com/problems/subarray-sum-equals-k/',
-    'sliding-window-maximum': 'https://leetcode.com/problems/sliding-window-maximum/',
-    'product-of-array-except-self': 'https://leetcode.com/problems/product-of-array-except-self/',
-    'group-anagrams': 'https://leetcode.com/problems/group-anagrams/',
-    'decode-string': 'https://leetcode.com/problems/decode-string/',
-    'longest-palindromic-substring': 'https://leetcode.com/problems/longest-palindromic-substring/',
-    'string-to-integer-atoi': 'https://leetcode.com/problems/string-to-integer-atoi/',
-    'longest-consecutive-sequence': 'https://leetcode.com/problems/longest-consecutive-sequence/',
-    'valid-parentheses': 'https://leetcode.com/problems/valid-parentheses/',
-    'generate-parentheses': 'https://leetcode.com/problems/generate-parentheses/',
-    'binary-tree-maximum-path-sum': 'https://leetcode.com/problems/binary-tree-maximum-path-sum/',
-    'serialize-and-deserialize-binary-tree': 'https://leetcode.com/problems/serialize-and-deserialize-binary-tree/',
-    'lowest-common-ancestor-of-binary-tree': 'https://leetcode.com/problems/lowest-common-ancestor-of-a-binary-tree/',
-    'validate-binary-search-tree': 'https://leetcode.com/problems/validate-binary-search-tree/',
-    'binary-tree-level-order-traversal': 'https://leetcode.com/problems/binary-tree-level-order-traversal/',
-    'binary-tree-right-side-view': 'https://leetcode.com/problems/binary-tree-right-side-view/',
-    'kth-smallest-element-in-bst': 'https://leetcode.com/problems/kth-smallest-element-in-a-bst/',
-    'invert-binary-tree': 'https://leetcode.com/problems/invert-binary-tree/',
-    'diameter-of-binary-tree': 'https://leetcode.com/problems/diameter-of-binary-tree/',
-    'binary-tree-zigzag-level-order-traversal': 'https://leetcode.com/problems/binary-tree-zigzag-level-order-traversal/',
-    'count-complete-tree-nodes': 'https://leetcode.com/problems/count-complete-tree-nodes/',
-    'path-sum-ii': 'https://leetcode.com/problems/path-sum-ii/',
-    'word-ladder': 'https://leetcode.com/problems/word-ladder/',
-    'number-of-islands': 'https://leetcode.com/problems/number-of-islands/',
-    'clone-graph': 'https://leetcode.com/problems/clone-graph/',
-    'course-schedule-ii': 'https://leetcode.com/problems/course-schedule-ii/',
-    'word-search-ii': 'https://leetcode.com/problems/word-search-ii/',
-    'pacific-atlantic-water-flow': 'https://leetcode.com/problems/pacific-atlantic-water-flow/',
-    'graph-valid-tree': 'https://leetcode.com/problems/graph-valid-tree/',
-    'alien-dictionary': 'https://leetcode.com/problems/alien-dictionary/',
-    'network-delay-time': 'https://leetcode.com/problems/network-delay-time/',
-    'shortest-path-in-binary-matrix': 'https://leetcode.com/problems/shortest-path-in-binary-matrix/',
-    'rotting-oranges': 'https://leetcode.com/problems/rotting-oranges/',
-    'coin-change': 'https://leetcode.com/problems/coin-change/',
-    'longest-increasing-subsequence': 'https://leetcode.com/problems/longest-increasing-subsequence/',
-    'word-break': 'https://leetcode.com/problems/word-break/',
-    'house-robber-ii': 'https://leetcode.com/problems/house-robber-ii/',
-    'decode-ways': 'https://leetcode.com/problems/decode-ways/',
-    'maximum-product-subarray': 'https://leetcode.com/problems/maximum-product-subarray/',
-    'partition-equal-subset-sum': 'https://leetcode.com/problems/partition-equal-subset-sum/',
-    'edit-distance': 'https://leetcode.com/problems/edit-distance/',
-    'longest-palindromic-subsequence': 'https://leetcode.com/problems/longest-palindromic-subsequence/',
-    'palindrome-partitioning': 'https://leetcode.com/problems/palindrome-partitioning/',
-    'unique-paths-ii': 'https://leetcode.com/problems/unique-paths-ii/',
-    'palindromic-substrings': 'https://leetcode.com/problems/palindromic-substrings/',
-    'regular-expression-matching': 'https://leetcode.com/problems/regular-expression-matching/',
-    'combination-sum-ii': 'https://leetcode.com/problems/combination-sum-ii/',
-    'permutations': 'https://leetcode.com/problems/permutations/',
-    'permutations-ii': 'https://leetcode.com/problems/permutations-ii/',
-    'subsets': 'https://leetcode.com/problems/subsets/',
-    'subsets-ii': 'https://leetcode.com/problems/subsets-ii/',
-    'letter-combinations-of-phone-number': 'https://leetcode.com/problems/letter-combinations-of-a-phone-number/',
-    'longest-valid-parentheses': 'https://leetcode.com/problems/longest-valid-parentheses/',
-    'maximal-rectangle': 'https://leetcode.com/problems/maximal-rectangle/',
-    'minimum-window-subsequence': 'https://leetcode.com/problems/minimum-window-subsequence/',
-    'median-of-two-sorted-arrays': 'https://leetcode.com/problems/median-of-two-sorted-arrays/',
-    'wildcard-matching': 'https://leetcode.com/problems/wildcard-matching/',
-    'text-justification': 'https://leetcode.com/problems/text-justification/',
-    'first-missing-positive': 'https://leetcode.com/problems/first-missing-positive/',
-    'largest-rectangle-in-histogram': 'https://leetcode.com/problems/largest-rectangle-in-histogram/'
+  'container-with-most-water':
+    'https://leetcode.com/problems/container-with-most-water/',
+  'trapping-rain-water': 'https://leetcode.com/problems/trapping-rain-water/',
+  '3sum': 'https://leetcode.com/problems/3sum/',
+  'longest-substring-without-repeating-characters':
+    'https://leetcode.com/problems/longest-substring-without-repeating-characters/',
+  'minimum-window-substring':
+    'https://leetcode.com/problems/minimum-window-substring/',
+  'subarray-sum-equals-k':
+    'https://leetcode.com/problems/subarray-sum-equals-k/',
+  'sliding-window-maximum':
+    'https://leetcode.com/problems/sliding-window-maximum/',
+  'product-of-array-except-self':
+    'https://leetcode.com/problems/product-of-array-except-self/',
+  'group-anagrams': 'https://leetcode.com/problems/group-anagrams/',
+  'decode-string': 'https://leetcode.com/problems/decode-string/',
+  'longest-palindromic-substring':
+    'https://leetcode.com/problems/longest-palindromic-substring/',
+  'string-to-integer-atoi':
+    'https://leetcode.com/problems/string-to-integer-atoi/',
+  'longest-consecutive-sequence':
+    'https://leetcode.com/problems/longest-consecutive-sequence/',
+  'valid-parentheses': 'https://leetcode.com/problems/valid-parentheses/',
+  'generate-parentheses': 'https://leetcode.com/problems/generate-parentheses/',
+  'binary-tree-maximum-path-sum':
+    'https://leetcode.com/problems/binary-tree-maximum-path-sum/',
+  'serialize-and-deserialize-binary-tree':
+    'https://leetcode.com/problems/serialize-and-deserialize-binary-tree/',
+  'lowest-common-ancestor-of-binary-tree':
+    'https://leetcode.com/problems/lowest-common-ancestor-of-a-binary-tree/',
+  'validate-binary-search-tree':
+    'https://leetcode.com/problems/validate-binary-search-tree/',
+  'binary-tree-level-order-traversal':
+    'https://leetcode.com/problems/binary-tree-level-order-traversal/',
+  'binary-tree-right-side-view':
+    'https://leetcode.com/problems/binary-tree-right-side-view/',
+  'kth-smallest-element-in-bst':
+    'https://leetcode.com/problems/kth-smallest-element-in-a-bst/',
+  'invert-binary-tree': 'https://leetcode.com/problems/invert-binary-tree/',
+  'diameter-of-binary-tree':
+    'https://leetcode.com/problems/diameter-of-binary-tree/',
+  'binary-tree-zigzag-level-order-traversal':
+    'https://leetcode.com/problems/binary-tree-zigzag-level-order-traversal/',
+  'count-complete-tree-nodes':
+    'https://leetcode.com/problems/count-complete-tree-nodes/',
+  'path-sum-ii': 'https://leetcode.com/problems/path-sum-ii/',
+  'word-ladder': 'https://leetcode.com/problems/word-ladder/',
+  'number-of-islands': 'https://leetcode.com/problems/number-of-islands/',
+  'clone-graph': 'https://leetcode.com/problems/clone-graph/',
+  'course-schedule-ii': 'https://leetcode.com/problems/course-schedule-ii/',
+  'word-search-ii': 'https://leetcode.com/problems/word-search-ii/',
+  'pacific-atlantic-water-flow':
+    'https://leetcode.com/problems/pacific-atlantic-water-flow/',
+  'graph-valid-tree': 'https://leetcode.com/problems/graph-valid-tree/',
+  'alien-dictionary': 'https://leetcode.com/problems/alien-dictionary/',
+  'network-delay-time': 'https://leetcode.com/problems/network-delay-time/',
+  'shortest-path-in-binary-matrix':
+    'https://leetcode.com/problems/shortest-path-in-binary-matrix/',
+  'rotting-oranges': 'https://leetcode.com/problems/rotting-oranges/',
+  'coin-change': 'https://leetcode.com/problems/coin-change/',
+  'longest-increasing-subsequence':
+    'https://leetcode.com/problems/longest-increasing-subsequence/',
+  'word-break': 'https://leetcode.com/problems/word-break/',
+  'house-robber-ii': 'https://leetcode.com/problems/house-robber-ii/',
+  'decode-ways': 'https://leetcode.com/problems/decode-ways/',
+  'maximum-product-subarray':
+    'https://leetcode.com/problems/maximum-product-subarray/',
+  'partition-equal-subset-sum':
+    'https://leetcode.com/problems/partition-equal-subset-sum/',
+  'edit-distance': 'https://leetcode.com/problems/edit-distance/',
+  'longest-palindromic-subsequence':
+    'https://leetcode.com/problems/longest-palindromic-subsequence/',
+  'palindrome-partitioning':
+    'https://leetcode.com/problems/palindrome-partitioning/',
+  'unique-paths-ii': 'https://leetcode.com/problems/unique-paths-ii/',
+  'palindromic-substrings':
+    'https://leetcode.com/problems/palindromic-substrings/',
+  'regular-expression-matching':
+    'https://leetcode.com/problems/regular-expression-matching/',
+  'combination-sum-ii': 'https://leetcode.com/problems/combination-sum-ii/',
+  permutations: 'https://leetcode.com/problems/permutations/',
+  'permutations-ii': 'https://leetcode.com/problems/permutations-ii/',
+  subsets: 'https://leetcode.com/problems/subsets/',
+  'subsets-ii': 'https://leetcode.com/problems/subsets-ii/',
+  'letter-combinations-of-phone-number':
+    'https://leetcode.com/problems/letter-combinations-of-a-phone-number/',
+  'longest-valid-parentheses':
+    'https://leetcode.com/problems/longest-valid-parentheses/',
+  'maximal-rectangle': 'https://leetcode.com/problems/maximal-rectangle/',
+  'minimum-window-subsequence':
+    'https://leetcode.com/problems/minimum-window-subsequence/',
+  'median-of-two-sorted-arrays':
+    'https://leetcode.com/problems/median-of-two-sorted-arrays/',
+  'wildcard-matching': 'https://leetcode.com/problems/wildcard-matching/',
+  'text-justification': 'https://leetcode.com/problems/text-justification/',
+  'first-missing-positive':
+    'https://leetcode.com/problems/first-missing-positive/',
+  'largest-rectangle-in-histogram':
+    'https://leetcode.com/problems/largest-rectangle-in-histogram/',
 };
 
 // Problem data from the question bank
@@ -555,12 +589,15 @@ function createProblemElement(problem) {
   const implementations = getImplementationTags(problem.fileName);
 
   // Use actual LeetCode URL from question bank
-  const leetcodeUrl = problemUrls[problem.fileName] || generateLeetCodeUrl(problem.name);
-  
+  const leetcodeUrl =
+    problemUrls[problem.fileName] || generateLeetCodeUrl(problem.name);
+
   div.innerHTML = `
-        <div class="problem-header">
-            <div class="problem-name">${problem.name}</div>
-            <a href="${leetcodeUrl}" target="_blank" class="leetcode-link">LeetCode →</a>
+        <div class="status-icon ${status}"></div>
+        <div class="problem-title">
+            <a href="${leetcodeUrl}" target="_blank" rel="noopener noreferrer" class="problem-link">
+                ${problem.name} 🔗
+            </a>
         </div>
         <div class="problem-frequency">Frequency: ${problem.frequency}</div>
         <div class="problem-implementations">
