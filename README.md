@@ -49,6 +49,17 @@ algorithm-category/
     └── algorithm-name.js   # Node.js implementation
 ```
 
+## 🎯 Progress Tracker
+
+Use the visual progress tracker to monitor your algorithm practice:
+
+1. **Open**: Open [progress-tracker.html](progress-tracker.html) in your browser
+2. **Filter**: Use dropdowns to filter by category or completion status
+3. **Search**: Find specific problems using the search box
+4. **Track**: Green = completed, Red = not started
+
+The tracker automatically shows which problems from your question bank have been implemented.
+
 ## 🧪 Running Tests
 
 ### Python
