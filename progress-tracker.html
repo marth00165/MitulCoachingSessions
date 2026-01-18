@@ -205,6 +205,25 @@
             color: #212529;
         }
 
+        .problem-link {
+            color: #212529;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .problem-link:hover {
+            color: #667eea;
+            text-decoration: none;
+        }
+
+        .problem-link:hover::after {
+            content: " →";
+            font-weight: bold;
+        }
+
         .problem-frequency {
             font-size: 0.85rem;
             color: #6c757d;
