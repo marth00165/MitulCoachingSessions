@@ -1,0 +1,24 @@
+{
+  "name": "coding-algorithms",
+  "version": "1.0.0",
+  "description": "Personal repository for tracking algorithm and data structure practice",
+  "main": "index.js",
+  "scripts": {
+    "test": "node test_runner.js",
+    "test:arrays": "node algorithms/arrays/nodejs/two-sum.js",
+    "test:search": "node algorithms/searching/nodejs/binary-search.js",
+    "test:linked-list": "node data-structures/linked-lists/nodejs/singly-linked-list.js"
+  },
+  "keywords": [
+    "algorithms",
+    "data-structures",
+    "coding-practice",
+    "javascript",
+    "nodejs"
+  ],
+  "author": "Personal",
+  "license": "MIT",
+  "engines": {
+    "node": ">=14.0.0"
+  }
+}

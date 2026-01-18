@@ -5,6 +5,7 @@ Thank you for your interest in contributing to this algorithms repository! This 
 ## 🚀 Getting Started
 
 ### Prerequisites
+
 - Git installed on your local machine
 - Python 3.8+ (primary language)
 - Basic understanding of algorithms and data structures
@@ -13,6 +14,7 @@ Thank you for your interest in contributing to this algorithms repository! This 
 ### Development Setup
 
 1. **Fork the Repository**
+
    ```bash
    # Fork on GitHub, then clone your fork
    git clone https://github.com/YOUR_USERNAME/MitulCoachingSessions.git
@@ -20,6 +22,7 @@ Thank you for your interest in contributing to this algorithms repository! This 
    ```
 
 2. **Create a Development Branch**
+
    ```bash
    git checkout -b feature/algorithm-name
    # or
@@ -60,6 +63,7 @@ Thank you for your interest in contributing to this algorithms repository! This 
 ### Code Standards
 
 #### File Organization
+
 ```
 algorithm-category/
 ├── algorithm-name.py           # Main implementation
@@ -68,12 +72,14 @@ algorithm-category/
 ```
 
 #### Naming Conventions
+
 - **Files**: `kebab-case.py` (e.g., `two-sum.py`, `merge-sort.py`)
 - **Functions**: `snake_case` (e.g., `binary_search`, `quick_sort`)
 - **Classes**: `PascalCase` (e.g., `LinkedList`, `BinaryTree`)
 - **Constants**: `UPPER_CASE` (e.g., `MAX_SIZE`, `DEFAULT_VALUE`)
 
 #### Code Structure Template
+
 ```python
 """
 Problem: [Clear problem title]
@@ -98,13 +104,13 @@ Edge Cases:
 def main_function(parameters):
     """
     Brief description
-    
+
     Args:
         parameters: Type and description
-        
+
     Returns:
         Return type and description
-        
+
     Raises:
         ExceptionType: When this exception occurs
     """
@@ -127,6 +133,7 @@ if __name__ == "__main__":
 ### Documentation Requirements
 
 #### Required Elements
+
 1. **Problem Description**: Clear, concise explanation
 2. **Algorithm Explanation**: Step-by-step approach
 3. **Complexity Analysis**: Time and space complexity
@@ -135,6 +142,7 @@ if __name__ == "__main__":
 6. **Comments**: Explain non-obvious logic
 
 #### Optional Elements
+
 - Multiple solution approaches
 - Optimization notes
 - Real-world applications
@@ -143,32 +151,35 @@ if __name__ == "__main__":
 ### Testing Requirements
 
 #### Minimum Test Coverage
+
 - **Normal Cases**: Typical inputs and expected outputs
 - **Edge Cases**: Empty inputs, single elements, boundary values
 - **Error Cases**: Invalid inputs that should raise exceptions
 - **Performance Cases**: Large inputs for complexity verification
 
 #### Test Implementation
+
 ```python
 def test_algorithm():
     """Test function following naming convention"""
-    
+
     # Test case 1: Normal case
     assert algorithm([1, 2, 3]) == expected_result
-    
+
     # Test case 2: Edge case
     assert algorithm([]) == expected_empty_result
-    
+
     # Test case 3: Error case
     with pytest.raises(ValueError):
         algorithm(invalid_input)
-    
+
     print("✅ All test cases passed!")
 ```
 
 ## 🔍 Code Review Process
 
 ### Before Submitting
+
 1. **Self-Review Checklist**
    - [ ] Code follows template structure
    - [ ] Includes proper documentation
@@ -179,22 +190,24 @@ def test_algorithm():
    - [ ] Handles edge cases
 
 2. **Run Tests**
+
    ```bash
    # Run your specific tests
    python your-algorithm.py
-   
+
    # Run all tests
    python test_runner.py
-   
+
    # Run with pytest (if available)
    pytest tests/
    ```
 
 3. **Code Quality Check** (Optional)
+
    ```bash
    # Format code
    black your-algorithm.py
-   
+
    # Check for issues
    pylint your-algorithm.py
    ```
@@ -207,29 +220,35 @@ def test_algorithm():
    - Link to any related issues
 
 2. **PR Template**
+
    ```markdown
    ## Description
+
    Brief description of changes
-   
+
    ## Type of Change
+
    - [ ] New algorithm implementation
    - [ ] New data structure
    - [ ] Bug fix
    - [ ] Documentation update
    - [ ] Test improvement
-   
+
    ## Testing
+
    - [ ] Added test cases
    - [ ] All tests pass
    - [ ] Tested edge cases
-   
+
    ## Checklist
+
    - [ ] Follows code standards
    - [ ] Includes documentation
    - [ ] Has proper complexity analysis
    ```
 
 ### Review Criteria
+
 - **Correctness**: Algorithm works as intended
 - **Efficiency**: Reasonable time/space complexity
 - **Readability**: Clean, well-commented code
@@ -239,11 +258,13 @@ def test_algorithm():
 ## 🐛 Bug Reports
 
 ### Bug Report Template
+
 ```markdown
 **Description**
 Clear description of the bug
 
 **Steps to Reproduce**
+
 1. Step 1
 2. Step 2
 3. See error
@@ -251,10 +272,11 @@ Clear description of the bug
 **Expected Behavior**
 What should happen
 
-**Actual Behavior** 
+**Actual Behavior**
 What actually happens
 
 **Environment**
+
 - OS: [e.g., macOS, Windows, Linux]
 - Python Version: [e.g., 3.9.1]
 - File: [e.g., algorithms/arrays/two-sum.py]
@@ -263,6 +285,7 @@ What actually happens
 ## 💡 Feature Requests
 
 ### Feature Request Template
+
 ```markdown
 **Feature Description**
 Clear description of the proposed feature
@@ -280,17 +303,20 @@ Other approaches you've thought about
 ## 📋 Checklist for Contributors
 
 ### Before Starting
+
 - [ ] Check if algorithm/data structure already exists
 - [ ] Read existing implementations for style consistency
 - [ ] Understand the problem thoroughly
 
 ### During Implementation
+
 - [ ] Follow the code template
 - [ ] Write clear, descriptive comments
 - [ ] Include complexity analysis
 - [ ] Add comprehensive test cases
 
 ### Before Submitting
+
 - [ ] Run all tests locally
 - [ ] Check code formatting
 - [ ] Write descriptive commit messages
@@ -299,11 +325,13 @@ Other approaches you've thought about
 ## ❓ Getting Help
 
 ### Resources
+
 - **Documentation**: Read the main [README.md](../README.md)
 - **Examples**: Check [examples/](../examples/) directory
 - **Templates**: Use [algorithm-template.py](../examples/algorithm-template.py)
 
 ### Contact
+
 - Open an issue for questions
 - Tag maintainers in PRs for review
 - Use discussions for general algorithm questions
@@ -311,6 +339,7 @@ Other approaches you've thought about
 ## 🙏 Recognition
 
 Contributors will be recognized in:
+
 - README.md contributors section
 - Git commit history
 - Release notes for significant contributions
