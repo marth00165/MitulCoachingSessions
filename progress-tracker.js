@@ -474,59 +474,137 @@ document.addEventListener('DOMContentLoaded', async function () {
 
 // Check which problems have implementations
 async function checkProblemsStatus() {
-  for (const [categoryKey, categoryData] of Object.entries(problemsData)) {
-    const paths = categoryPaths[categoryKey];
+  try {
+    // Use absolute localhost URL so it works from both file:// and http://
+    const baseUrl =
+      window.location.protocol === 'file:'
+        ? 'http://localhost:3001' // Connect to server from file://
+        : window.location.origin; // Use current origin if served by server
 
+    // First, get list of all existing implementations (single API call)
+    const response = await fetch(`${baseUrl}/api/list-implementations`);
+
+    if (!response.ok) {
+      console.warn(
+        'Could not fetch implementations list - server may be offline',
+      );
+      markAllAsNotCompleted();
+      return;
+    }
+
+    const existingImplementations = await response.json();
+    console.log('Found implementations:', Object.keys(existingImplementations));
+    console.log('Implementation details:', existingImplementations);
+
+    // Now only check test status for files that actually exist
+    const testChecks = [];
+    for (const [fileName, languages] of Object.entries(
+      existingImplementations,
+    )) {
+      // Map file names to problem names (handle different naming conventions)
+      const problemName = mapFileToProblemName(fileName);
+
+      // Check Node.js implementation first (if exists)
+      if (languages.nodejs) {
+        testChecks.push(
+          checkTestStatus(problemName, 'nodejs', languages.nodejs.path),
+        );
+      }
+      // Check Python implementation if no Node.js or if Node.js tests fail
+      else if (languages.python) {
+        testChecks.push(
+          checkTestStatus(problemName, 'python', languages.python.path),
+        );
+      }
+    }
+
+    // Run all test checks in parallel (much faster)
+    const testResults = await Promise.all(testChecks);
+
+    // Update status for files that exist
+    testResults.forEach((result) => {
+      if (result) {
+        console.log(`Setting ${result.fileName} to ${result.status}`);
+        problemsStatus[result.fileName] = result.status;
+      }
+    });
+
+    console.log('Final problemsStatus:', problemsStatus);
+
+    // Set remaining problems as not-completed
+    markRemainingAsNotCompleted();
+  } catch (error) {
+    console.warn(
+      'API not available (is server running?), all problems marked as not-completed:',
+      error.message,
+    );
+    markAllAsNotCompleted();
+  }
+}
+
+// Check test status for a specific file
+async function checkTestStatus(fileName, language, filePath) {
+  try {
+    const baseUrl =
+      window.location.protocol === 'file:'
+        ? 'http://localhost:3001'
+        : window.location.origin;
+
+    const response = await fetch(`${baseUrl}/api/check-tests`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ fileName, language, filePath }),
+    });
+
+    if (response.ok) {
+      const result = await response.json();
+      return {
+        fileName,
+        status: result.testsPass ? 'completed' : 'attempted',
+      };
+    }
+  } catch (error) {
+    console.warn(`Failed to check tests for ${fileName}:`, error.message);
+  }
+
+  return { fileName, status: 'attempted' }; // File exists but can't run tests
+}
+
+// Map file names to problem names (handle different naming conventions)
+function mapFileToProblemName(fileName) {
+  const fileNameMapping = {
+    numberofislands: 'number-of-islands',
+    twosum: 'two-sum',
+    twosim: 'two-sum', // typo handling
+    binarysearch: 'binary-search',
+    singlylinkedlist: 'singly-linked-list',
+    'singly-linked-list': 'singly-linked-list',
+    // Add more mappings as needed
+  };
+
+  // Return mapped name if it exists, otherwise return the original fileName
+  return (
+    fileNameMapping[fileName.toLowerCase().replace(/[-_]/g, '')] || fileName
+  );
+}
+
+// Helper function to mark all problems as not-completed
+function markAllAsNotCompleted() {
+  for (const [categoryKey, categoryData] of Object.entries(problemsData)) {
     for (const problem of categoryData.problems) {
-      const status = await checkProblemImplementation(problem.fileName, paths);
-      problemsStatus[problem.fileName] = status;
+      problemsStatus[problem.fileName] = 'not-completed';
     }
   }
 }
 
-// Check if a problem has either Python or Node.js implementation and if tests pass
-async function checkProblemImplementation(fileName, possiblePaths) {
-  try {
-    // First try the API server
-    const nodeResponse = await fetch(`/api/check-implementation`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        fileName,
-        language: 'nodejs',
-        paths: possiblePaths,
-      }),
-    });
-
-    if (nodeResponse.ok) {
-      const nodeResult = await nodeResponse.json();
-      if (nodeResult.exists) {
-        return nodeResult.testsPass ? 'completed' : 'attempted';
+// Helper function to mark remaining problems as not-completed
+function markRemainingAsNotCompleted() {
+  for (const [categoryKey, categoryData] of Object.entries(problemsData)) {
+    for (const problem of categoryData.problems) {
+      if (!problemsStatus[problem.fileName]) {
+        problemsStatus[problem.fileName] = 'not-completed';
       }
     }
-
-    // Check for Python implementation
-    const pythonResponse = await fetch(`/api/check-implementation`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        fileName,
-        language: 'python',
-        paths: possiblePaths,
-      }),
-    });
-
-    if (pythonResponse.ok) {
-      const pythonResult = await pythonResponse.json();
-      if (pythonResult.exists) {
-        return pythonResult.testsPass ? 'completed' : 'attempted';
-      }
-    }
-
-    return 'not-completed';
-  } catch (error) {
-    console.warn(`API not available, using fallback for ${fileName}:`, error);
-    return 'not-completed';
   }
 }
 

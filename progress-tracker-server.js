@@ -18,6 +18,34 @@ app.use(express.json());
 app.use(express.static('.'));
 
 /**
+ * Get all existing implementation files
+ */
+app.get('/api/list-implementations', async (req, res) => {
+  try {
+    const implementations = await getAllImplementations();
+    res.json(implementations);
+  } catch (error) {
+    console.error('Error listing implementations:', error);
+    res.status(500).json({ error: error.message });
+  }
+});
+
+/**
+ * Check if tests pass for a specific file
+ */
+app.post('/api/check-tests', async (req, res) => {
+  const { fileName, language, filePath } = req.body;
+
+  try {
+    const testsPass = await runTests(filePath, language);
+    res.json({ testsPass, filePath });
+  } catch (error) {
+    console.error(`Error running tests for ${fileName}:`, error);
+    res.json({ testsPass: false, error: error.message });
+  }
+});
+
+/**
  * Check if a problem implementation exists and if its tests pass
  */
 app.post('/api/check-implementation', async (req, res) => {
@@ -31,6 +59,76 @@ app.post('/api/check-implementation', async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 });
+
+/**
+ * Get all existing implementation files from the workspace
+ */
+async function getAllImplementations() {
+  const implementations = {};
+  const algorithmPaths = [
+    'algorithms/arrays',
+    'algorithms/strings',
+    'algorithms/trees',
+    'algorithms/graphs',
+    'algorithms/dynamic-programming',
+    'algorithms/backtracking',
+    'algorithms/searching',
+    'algorithms/sorting',
+    'algorithms/math',
+    'algorithms/greedy',
+    'data-structures/linked-lists',
+    'data-structures/stacks',
+    'data-structures/queues',
+    'data-structures/hash-tables',
+    'data-structures/heaps',
+    'data-structures/tries',
+  ];
+
+  for (const dirPath of algorithmPaths) {
+    try {
+      // Check main directory
+      if (fs.existsSync(dirPath)) {
+        const files = fs.readdirSync(dirPath);
+        for (const file of files) {
+          if (file.endsWith('.py') || file.endsWith('.js')) {
+            const fileName = path.basename(file, path.extname(file));
+            if (!implementations[fileName]) {
+              implementations[fileName] = {};
+            }
+            const language = file.endsWith('.py') ? 'python' : 'nodejs';
+            implementations[fileName][language] = {
+              path: path.join(dirPath, file),
+              category: dirPath.split('/')[1],
+            };
+          }
+        }
+      }
+
+      // Check nodejs subdirectory
+      const nodejsPath = path.join(dirPath, 'nodejs');
+      if (fs.existsSync(nodejsPath)) {
+        const files = fs.readdirSync(nodejsPath);
+        for (const file of files) {
+          if (file.endsWith('.js')) {
+            const fileName = path.basename(file, '.js');
+            if (!implementations[fileName]) {
+              implementations[fileName] = {};
+            }
+            implementations[fileName].nodejs = {
+              path: path.join(nodejsPath, file),
+              category: dirPath.split('/')[1],
+            };
+          }
+        }
+      }
+    } catch (error) {
+      // Directory doesn't exist, skip
+      continue;
+    }
+  }
+
+  return implementations;
+}
 
 /**
  * Check implementation status for a specific file and language
