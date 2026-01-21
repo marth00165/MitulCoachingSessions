@@ -53,12 +53,44 @@ algorithm-category/
 
 Use the visual progress tracker to monitor your algorithm practice:
 
-1. **Open**: Open [progress-tracker.html](progress-tracker.html) in your browser
+### Static Mode (Basic)
+
+1. **Open**: Open [progress-tracker.html](progress-tracker.html) directly in your browser
 2. **Filter**: Use dropdowns to filter by category or completion status
 3. **Search**: Find specific problems using the search box
-4. **Track**: Green = completed, Red = not started
+4. **Status**:
+   - 🔴 Red = Not started
+   - 🟡 Yellow = Attempted (file exists but tests fail)
+   - 🟢 Green = Completed (tests pass)
 
-The tracker automatically shows which problems from your question bank have been implemented.
+### Dynamic Mode (Recommended)
+
+For real-time test results and automatic file detection:
+
+```bash
+# Install dependencies
+npm install
+
+# Start the progress tracker server
+npm run tracker
+# or
+node progress-tracker-server.js
+```
+
+Then visit: http://localhost:3001/progress-tracker.html
+
+**Dynamic Features:**
+
+- **Real-time test execution**: Automatically runs your test files to check pass/fail status
+- **File detection**: Automatically discovers new implementations you add
+- **Three status levels**:
+  - ✅ **Completed** - Implementation exists and all tests pass
+  - ⚠️ **Attempted** - Implementation exists but tests fail
+  - ❌ **Not Started** - No implementation found
+- **Live updates**: Status changes immediately when you fix tests or add new files
+
+**How it works:**
+The server scans your repository for `.js` and `.py` files, executes them to check test results, and provides a real-time API to the web interface. When you run `node your-algorithm.js`, the server detects whether the output contains success indicators (`✅`, `passed`) or failure indicators (`❌`, `FAILED`) to determine the status.
 
 ## 🧪 Running Tests
 
@@ -90,6 +122,17 @@ node test_runner.js --category=arrays
 # Or use npm scripts
 npm test
 npm run test:arrays
+```
+
+### Progress Tracker Server
+
+```bash
+# Start the progress tracker with dynamic test execution
+npm run tracker
+
+# Alternative commands
+npm start
+node progress-tracker-server.js
 ```
 
 ## 📝 Implementation Guidelines

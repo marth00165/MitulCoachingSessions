@@ -526,20 +526,6 @@ async function checkProblemImplementation(fileName, possiblePaths) {
     return 'not-completed';
   } catch (error) {
     console.warn(`API not available, using fallback for ${fileName}:`, error);
-
-    // Fallback: Check known implementations based on your current work
-    const knownImplementations = {
-      'two-sum': { exists: true, testsPass: true },
-      'binary-search': { exists: true, testsPass: true },
-      'number-of-islands': { exists: true, testsPass: true },
-      'singly-linked-list': { exists: true, testsPass: false }, // Example of attempted
-    };
-
-    const known = knownImplementations[fileName];
-    if (known && known.exists) {
-      return known.testsPass ? 'completed' : 'attempted';
-    }
-
     return 'not-completed';
   }
 }
