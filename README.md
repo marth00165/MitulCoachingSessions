@@ -51,46 +51,94 @@ algorithm-category/
 
 ## 🎯 Progress Tracker
 
-Use the visual progress tracker to monitor your algorithm practice:
+The progress tracker provides a visual dashboard to monitor your coding practice progress with real-time status updates.
 
-### Static Mode (Basic)
+### 🚀 Quick Start
 
-1. **Open**: Open [progress-tracker.html](progress-tracker.html) directly in your browser
-2. **Filter**: Use dropdowns to filter by category or completion status
-3. **Search**: Find specific problems using the search box
-4. **Status**:
-   - 🔴 Red = Not started
-   - 🟡 Yellow = Attempted (file exists but tests fail)
-   - 🟢 Green = Completed (tests pass)
-
-### Dynamic Mode (Recommended)
-
-For real-time test results and automatic file detection:
+**Option 1: Dynamic Mode (Recommended)**
 
 ```bash
-# Install dependencies
+# Install dependencies (one time setup)
 npm install
 
-# Start the progress tracker server
+# Start the tracker server
 npm run tracker
-# or
-node progress-tracker-server.js
 ```
 
-Then visit: http://localhost:3001/progress-tracker.html
+Then **either**:
 
-**Dynamic Features:**
+- Visit: http://localhost:3001/progress-tracker.html
+- **OR** double-click [progress-tracker.html](progress-tracker.html) in Finder
 
-- **Real-time test execution**: Automatically runs your test files to check pass/fail status
-- **File detection**: Automatically discovers new implementations you add
-- **Three status levels**:
-  - ✅ **Completed** - Implementation exists and all tests pass
-  - ⚠️ **Attempted** - Implementation exists but tests fail
-  - ❌ **Not Started** - No implementation found
-- **Live updates**: Status changes immediately when you fix tests or add new files
+**Option 2: Static Mode**
 
-**How it works:**
-The server scans your repository for `.js` and `.py` files, executes them to check test results, and provides a real-time API to the web interface. When you run `node your-algorithm.js`, the server detects whether the output contains success indicators (`✅`, `passed`) or failure indicators (`❌`, `FAILED`) to determine the status.
+- Simply double-click [progress-tracker.html](progress-tracker.html) to open in browser
+- Limited functionality without server
+
+### 📊 Status Indicators
+
+- 🟢 **Completed** - Implementation exists and all tests pass
+- 🟡 **Attempted** - Implementation exists but tests fail
+- 🔴 **Not Started** - No implementation found
+
+### 🔧 How It Works
+
+**Dynamic Mode Features:**
+
+- **Auto-discovery**: Scans your repo for `.js` and `.py` files automatically
+- **Real-time testing**: Executes your files to check if tests pass or fail
+- **Intelligent mapping**: Maps file names like `numberofislands.js` to problem names like `number-of-islands`
+- **Performance optimized**: Only tests files that exist (not all 80+ problems)
+- **Live updates**: Status changes immediately when you add files or fix tests
+
+**Test Detection Logic:**
+The server runs your implementation files and checks for:
+
+- **Pass indicators**: `✅`, `passed`, `All test`, exit code 0
+- **Fail indicators**: `❌`, `FAILED`, `assert`, non-zero exit code
+
+### 📱 Using the Interface
+
+1. **Filter by Category**: Choose specific topics (Arrays, Trees, Graphs, etc.)
+2. **Filter by Status**: Show only completed, attempted, or not started
+3. **Search**: Find specific problems by name
+4. **Click Problem Names**: Direct links to LeetCode problem pages
+5. **View Stats**: See completion progress in the header
+
+### 🔄 Workflow Example
+
+```bash
+# 1. Start the tracker
+npm run tracker
+
+# 2. Open tracker in browser (shows current status)
+# 3. Implement a new algorithm
+echo "console.log('✅ Tests pass!');" > algorithms/arrays/new-problem.js
+
+# 4. Refresh tracker - new problem appears as "Completed"
+# 5. Break the test
+echo "console.log('❌ Tests fail!');" > algorithms/arrays/new-problem.js
+
+# 6. Refresh tracker - status changes to "Attempted"
+```
+
+### 🏗️ File Naming Conventions
+
+The tracker automatically maps different file naming styles:
+
+| Your File Name       | Problem Name        | Status |
+| -------------------- | ------------------- | ------ |
+| `numberofislands.js` | `number-of-islands` | ✅     |
+| `two-sum.js`         | `two-sum`           | ✅     |
+| `binarySearch.py`    | `binary-search`     | ✅     |
+
+**Supported locations:**
+
+- `algorithms/category/file.js`
+- `algorithms/category/nodejs/file.js`
+- `algorithms/category/file.py`
+- `data-structures/category/file.js`
+- `data-structures/category/nodejs/file.js`
 
 ## 🧪 Running Tests
 
@@ -133,6 +181,10 @@ npm run tracker
 # Alternative commands
 npm start
 node progress-tracker-server.js
+
+# View tracker
+# Option 1: http://localhost:3001/progress-tracker.html (served by server)
+# Option 2: Double-click progress-tracker.html (connects to server automatically)
 ```
 
 ## 📝 Implementation Guidelines
