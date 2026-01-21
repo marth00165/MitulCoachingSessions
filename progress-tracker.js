@@ -465,38 +465,83 @@ let currentSearch = '';
 let problemsStatus = {};
 
 // Initialize the application
-document.addEventListener('DOMContentLoaded', function () {
-  checkProblemsStatus();
+document.addEventListener('DOMContentLoaded', async function () {
+  await checkProblemsStatus();
   renderProblems();
   setupEventListeners();
   updateStats();
 });
 
 // Check which problems have implementations
-function checkProblemsStatus() {
+async function checkProblemsStatus() {
   for (const [categoryKey, categoryData] of Object.entries(problemsData)) {
     const paths = categoryPaths[categoryKey];
 
     for (const problem of categoryData.problems) {
-      const status = checkProblemImplementation(problem.fileName, paths);
+      const status = await checkProblemImplementation(problem.fileName, paths);
       problemsStatus[problem.fileName] = status;
     }
   }
 }
 
-// Check if a problem has either Python or Node.js implementation
-function checkProblemImplementation(fileName, possiblePaths) {
-  // This function simulates checking file existence
-  // In a real implementation, you would need to use a backend service or
-  // pre-generate this data since JavaScript can't access the filesystem directly
+// Check if a problem has either Python or Node.js implementation and if tests pass
+async function checkProblemImplementation(fileName, possiblePaths) {
+  try {
+    // First try the API server
+    const nodeResponse = await fetch(`/api/check-implementation`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        fileName,
+        language: 'nodejs',
+        paths: possiblePaths,
+      }),
+    });
 
-  // For demo purposes, mark some problems as completed based on what we know exists
-  const knownImplementations = {
-    'two-sum': true,
-    'binary-search': true,
-  };
+    if (nodeResponse.ok) {
+      const nodeResult = await nodeResponse.json();
+      if (nodeResult.exists) {
+        return nodeResult.testsPass ? 'completed' : 'attempted';
+      }
+    }
 
-  return knownImplementations[fileName] ? 'completed' : 'not-completed';
+    // Check for Python implementation
+    const pythonResponse = await fetch(`/api/check-implementation`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        fileName,
+        language: 'python',
+        paths: possiblePaths,
+      }),
+    });
+
+    if (pythonResponse.ok) {
+      const pythonResult = await pythonResponse.json();
+      if (pythonResult.exists) {
+        return pythonResult.testsPass ? 'completed' : 'attempted';
+      }
+    }
+
+    return 'not-completed';
+  } catch (error) {
+    console.warn(`API not available, using fallback for ${fileName}:`, error);
+
+    // Fallback: Check known implementations based on your current work
+    const knownImplementations = {
+      'two-sum': { exists: true, testsPass: true },
+      'binary-search': { exists: true, testsPass: true },
+      'number-of-islands': { exists: true, testsPass: true },
+      'singly-linked-list': { exists: true, testsPass: false }, // Example of attempted
+    };
+
+    const known = knownImplementations[fileName];
+    if (known && known.exists) {
+      return known.testsPass ? 'completed' : 'attempted';
+    }
+
+    return 'not-completed';
+  }
 }
 
 // Render all problems
@@ -627,7 +672,9 @@ function getImplementationTags(fileName) {
   const status = problemsStatus[fileName];
 
   if (status === 'completed') {
-    return '<span class="implementation-tag python-tag">Implemented ✓</span>';
+    return '<span class="implementation-tag python-tag">Tests Pass ✓</span>';
+  } else if (status === 'attempted') {
+    return '<span class="implementation-tag nodejs-tag">Tests Fail ⚠️</span>';
   } else {
     return '<span class="implementation-tag missing-tag">Not Implemented</span>';
   }
@@ -669,6 +716,9 @@ function updateStats() {
   const completed = allProblems.filter(
     (p) => problemsStatus[p.fileName] === 'completed',
   ).length;
+  const attempted = allProblems.filter(
+    (p) => problemsStatus[p.fileName] === 'attempted',
+  ).length;
   const total = allProblems.length;
   const percentage = total > 0 ? Math.round((completed / total) * 100) : 0;
 
@@ -676,6 +726,21 @@ function updateStats() {
   document.getElementById('completed-count').textContent = completed;
   document.getElementById('completion-percentage').textContent =
     percentage + '%';
+
+  // Add attempted count to header stats
+  const headerStats = document.querySelector('.stats');
+  let attemptedStat = document.getElementById('attempted-count');
+  if (!attemptedStat) {
+    const attemptedItem = document.createElement('div');
+    attemptedItem.className = 'stat-item';
+    attemptedItem.innerHTML = `
+      <span class="stat-number" id="attempted-count">${attempted}</span>
+      <span class="stat-label">Attempted</span>
+    `;
+    headerStats.insertBefore(attemptedItem, headerStats.children[2]);
+  } else {
+    attemptedStat.textContent = attempted;
+  }
 }
 
 // Get all problems that match current filters

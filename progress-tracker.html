@@ -124,7 +124,7 @@
             background-color: #28a745;
         }
 
-        .partially-completed {
+        .attempted {
             background-color: #ffc107;
         }
 
@@ -189,7 +189,7 @@
             background-color: #f8fff9;
         }
 
-        .problem-card.partially-completed {
+        .problem-card.attempted {
             border-color: #ffc107;
             background-color: #fffcf0;
         }
@@ -336,6 +336,7 @@
                 <select id="status-filter">
                     <option value="all">All Status</option>
                     <option value="completed">Completed</option>
+                    <option value="attempted">Attempted</option>
                     <option value="not-completed">Not Started</option>
                 </select>
 
@@ -346,7 +347,11 @@
             <div class="legend">
                 <div class="legend-item">
                     <div class="legend-dot completed"></div>
-                    <span>Completed (Either Language)</span>
+                    <span>Completed (Tests Pass)</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-dot attempted"></div>
+                    <span>Attempted (Tests Fail)</span>
                 </div>
                 <div class="legend-item">
                     <div class="legend-dot not-completed"></div>
