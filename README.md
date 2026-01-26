@@ -331,7 +331,7 @@ Each algorithm should include:
 
 ### Algorithms Implemented
 
-- [ ] Arrays: 2/20 (Two Sum ✅, Two Sum II ✅)
+- [ ] Arrays: 3/20 (Two Sum ✅, Two Sum II ✅, 3Sum ✅)
 - [ ] Strings: 1/15 (Valid Palindrome ✅)
 - [ ] Dynamic Programming: 0/25
 - [ ] Graphs: 0/20

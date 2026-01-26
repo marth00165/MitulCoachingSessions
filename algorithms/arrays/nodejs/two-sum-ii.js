@@ -56,38 +56,6 @@ function twoSum(numbers, target) {
 }
 
 /**
- * Alternative implementation using binary search for each element
- * Less efficient but demonstrates different approach
- *
- * @param {number[]} numbers - Array of integers sorted in non-decreasing order
- * @param {number} target - Target sum
- * @returns {number[]} 1-indexed positions of the two numbers that sum to target
- */
-function twoSumBinarySearch(numbers, target) {
-  for (let i = 0; i < numbers.length - 1; i++) {
-    const complement = target - numbers[i];
-
-    // Binary search for complement in remaining array
-    let left = i + 1;
-    let right = numbers.length - 1;
-
-    while (left <= right) {
-      const mid = Math.floor((left + right) / 2);
-
-      if (numbers[mid] === complement) {
-        return [i + 1, mid + 1]; // Return 1-indexed positions
-      } else if (numbers[mid] < complement) {
-        left = mid + 1;
-      } else {
-        right = mid - 1;
-      }
-    }
-  }
-
-  throw new Error('No solution found');
-}
-
-/**
  * Test function for Two Sum II - Input Array Is Sorted
  */
 function testTwoSum() {
@@ -145,10 +113,10 @@ function testTwoSum() {
   );
 
   // Test binary search implementation as well
-  result = twoSumBinarySearch([2, 7, 11, 15], 9);
+  result = twoSum([2, 7, 11, 15], 9);
   console.assert(
     JSON.stringify(result) === JSON.stringify([1, 2]),
-    'Binary search implementation test failed',
+    'Additional test failed',
   );
 
   console.log('✅ All Two Sum II test cases passed!');
@@ -157,7 +125,6 @@ function testTwoSum() {
 // Export for use in other files
 module.exports = {
   twoSum,
-  twoSumBinarySearch,
   testTwoSum,
 };
 
