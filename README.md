@@ -51,51 +51,37 @@ algorithm-category/
 
 ## 🎯 Progress Tracker
 
-The progress tracker provides a visual dashboard to monitor your coding practice progress with real-time status updates.
+The progress tracker provides a visual dashboard to monitor your coding practice progress.
 
 ### 🚀 Quick Start
 
-**Option 1: Dynamic Mode (Recommended)**
+**Simple Static Mode**
 
-```bash
-# Install dependencies (one time setup)
-npm install
-
-# Start the tracker server
-npm run tracker
-```
-
-Then **either**:
-
-- Visit: http://localhost:3001/progress-tracker.html
-- **OR** double-click [progress-tracker.html](progress-tracker.html) in Finder
-
-**Option 2: Static Mode**
-
-- Simply double-click [progress-tracker.html](progress-tracker.html) to open in browser
-- Limited functionality without server
+1. Double-click [progress-tracker.html](progress-tracker.html) to open in your browser
+2. View your current progress with real-time filtering and search
 
 ### 📊 Status Indicators
 
-- 🟢 **Completed** - Implementation exists and all tests pass
-- 🟡 **Attempted** - Implementation exists but tests fail
-- 🔴 **Not Started** - No implementation found
+- 🟢 **Completed** - Problem solved and implemented
+- 🟡 **Attempted** - Working on it but not finished
+- 🔴 **Not Started** - Haven't started yet
 
 ### 🔧 How It Works
 
-**Dynamic Mode Features:**
+The tracker uses a simple static data structure in [progress-tracker.js](progress-tracker.js). To update your progress:
 
-- **Auto-discovery**: Scans your repo for `.js` and `.py` files automatically
-- **Real-time testing**: Executes your files to check if tests pass or fail
-- **Intelligent mapping**: Maps file names like `numberofislands.js` to problem names like `number-of-islands`
-- **Performance optimized**: Only tests files that exist (not all 80+ problems)
-- **Live updates**: Status changes immediately when you add files or fix tests
+1. Open `progress-tracker.js`
+2. Find the problem in the `problems` object
+3. Change the `status` field to:
+   - `'completed'` - when you finish a problem
+   - `'attempted'` - when you're working on it
+   - `'not-completed'` - when you haven't started
 
-**Test Detection Logic:**
-The server runs your implementation files and checks for:
+**Example:**
 
-- **Pass indicators**: `✅`, `passed`, `All test`, exit code 0
-- **Fail indicators**: `❌`, `FAILED`, `assert`, non-zero exit code
+```javascript
+{ name: 'two-sum', url: 'https://leetcode.com/problems/two-sum/', status: 'completed' }
+```
 
 ### 📱 Using the Interface
 
@@ -105,40 +91,11 @@ The server runs your implementation files and checks for:
 4. **Click Problem Names**: Direct links to LeetCode problem pages
 5. **View Stats**: See completion progress in the header
 
-### 🔄 Workflow Example
-
-```bash
-# 1. Start the tracker
-npm run tracker
-
-# 2. Open tracker in browser (shows current status)
-# 3. Implement a new algorithm
-echo "console.log('✅ Tests pass!');" > algorithms/arrays/new-problem.js
-
-# 4. Refresh tracker - new problem appears as "Completed"
-# 5. Break the test
-echo "console.log('❌ Tests fail!');" > algorithms/arrays/new-problem.js
-
-# 6. Refresh tracker - status changes to "Attempted"
-```
-
-### 🏗️ File Naming Conventions
-
-The tracker automatically maps different file naming styles:
-
-| Your File Name       | Problem Name        | Status |
-| -------------------- | ------------------- | ------ |
-| `numberofislands.js` | `number-of-islands` | ✅     |
-| `two-sum.js`         | `two-sum`           | ✅     |
-| `binarySearch.py`    | `binary-search`     | ✅     |
-
-**Supported locations:**
-
-- `algorithms/category/file.js`
-- `algorithms/category/nodejs/file.js`
-- `algorithms/category/file.py`
-- `data-structures/category/file.js`
-- `data-structures/category/nodejs/file.js`
+6. **Filter by Category**: Choose specific topics (Arrays, Trees, Graphs, etc.)
+7. **Filter by Status**: Show only completed, attempted, or not started
+8. **Search**: Find specific problems by name
+9. **Click Problem Names**: Direct links to LeetCode problem pages
+10. **View Stats**: See completion progress in the header
 
 ## 🧪 Running Tests
 
@@ -170,21 +127,6 @@ node test_runner.js --category=arrays
 # Or use npm scripts
 npm test
 npm run test:arrays
-```
-
-### Progress Tracker Server
-
-```bash
-# Start the progress tracker with dynamic test execution
-npm run tracker
-
-# Alternative commands
-npm start
-node progress-tracker-server.js
-
-# View tracker
-# Option 1: http://localhost:3001/progress-tracker.html (served by server)
-# Option 2: Double-click progress-tracker.html (connects to server automatically)
 ```
 
 ## 📝 Adding New Implementations

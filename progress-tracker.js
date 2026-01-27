@@ -1,833 +1,487 @@
-// Algorithm Progress Tracker JavaScript
+// Algorithm Progress Tracker - Simplified Static Version
 
-// Problem URLs from the question bank HTML file
-const problemUrls = {
-  'container-with-most-water':
-    'https://leetcode.com/problems/container-with-most-water/',
-  'trapping-rain-water': 'https://leetcode.com/problems/trapping-rain-water/',
-  '3sum': 'https://leetcode.com/problems/3sum/',
-  'longest-substring-without-repeating-characters':
-    'https://leetcode.com/problems/longest-substring-without-repeating-characters/',
-  'minimum-window-substring':
-    'https://leetcode.com/problems/minimum-window-substring/',
-  'subarray-sum-equals-k':
-    'https://leetcode.com/problems/subarray-sum-equals-k/',
-  'sliding-window-maximum':
-    'https://leetcode.com/problems/sliding-window-maximum/',
-  'product-of-array-except-self':
-    'https://leetcode.com/problems/product-of-array-except-self/',
-  'group-anagrams': 'https://leetcode.com/problems/group-anagrams/',
-  'decode-string': 'https://leetcode.com/problems/decode-string/',
-  'longest-palindromic-substring':
-    'https://leetcode.com/problems/longest-palindromic-substring/',
-  'string-to-integer-atoi':
-    'https://leetcode.com/problems/string-to-integer-atoi/',
-  'longest-consecutive-sequence':
-    'https://leetcode.com/problems/longest-consecutive-sequence/',
-  'valid-parentheses': 'https://leetcode.com/problems/valid-parentheses/',
-  'generate-parentheses': 'https://leetcode.com/problems/generate-parentheses/',
-  'binary-tree-maximum-path-sum':
-    'https://leetcode.com/problems/binary-tree-maximum-path-sum/',
-  'serialize-and-deserialize-binary-tree':
-    'https://leetcode.com/problems/serialize-and-deserialize-binary-tree/',
-  'lowest-common-ancestor-of-binary-tree':
-    'https://leetcode.com/problems/lowest-common-ancestor-of-a-binary-tree/',
-  'validate-binary-search-tree':
-    'https://leetcode.com/problems/validate-binary-search-tree/',
-  'binary-tree-level-order-traversal':
-    'https://leetcode.com/problems/binary-tree-level-order-traversal/',
-  'binary-tree-right-side-view':
-    'https://leetcode.com/problems/binary-tree-right-side-view/',
-  'kth-smallest-element-in-bst':
-    'https://leetcode.com/problems/kth-smallest-element-in-a-bst/',
-  'invert-binary-tree': 'https://leetcode.com/problems/invert-binary-tree/',
-  'diameter-of-binary-tree':
-    'https://leetcode.com/problems/diameter-of-binary-tree/',
-  'binary-tree-zigzag-level-order-traversal':
-    'https://leetcode.com/problems/binary-tree-zigzag-level-order-traversal/',
-  'count-complete-tree-nodes':
-    'https://leetcode.com/problems/count-complete-tree-nodes/',
-  'path-sum-ii': 'https://leetcode.com/problems/path-sum-ii/',
-  'word-ladder': 'https://leetcode.com/problems/word-ladder/',
-  'number-of-islands': 'https://leetcode.com/problems/number-of-islands/',
-  'clone-graph': 'https://leetcode.com/problems/clone-graph/',
-  'course-schedule-ii': 'https://leetcode.com/problems/course-schedule-ii/',
-  'word-search-ii': 'https://leetcode.com/problems/word-search-ii/',
-  'pacific-atlantic-water-flow':
-    'https://leetcode.com/problems/pacific-atlantic-water-flow/',
-  'graph-valid-tree': 'https://leetcode.com/problems/graph-valid-tree/',
-  'alien-dictionary': 'https://leetcode.com/problems/alien-dictionary/',
-  'network-delay-time': 'https://leetcode.com/problems/network-delay-time/',
-  'shortest-path-in-binary-matrix':
-    'https://leetcode.com/problems/shortest-path-in-binary-matrix/',
-  'rotting-oranges': 'https://leetcode.com/problems/rotting-oranges/',
-  'coin-change': 'https://leetcode.com/problems/coin-change/',
-  'longest-increasing-subsequence':
-    'https://leetcode.com/problems/longest-increasing-subsequence/',
-  'word-break': 'https://leetcode.com/problems/word-break/',
-  'house-robber-ii': 'https://leetcode.com/problems/house-robber-ii/',
-  'decode-ways': 'https://leetcode.com/problems/decode-ways/',
-  'maximum-product-subarray':
-    'https://leetcode.com/problems/maximum-product-subarray/',
-  'partition-equal-subset-sum':
-    'https://leetcode.com/problems/partition-equal-subset-sum/',
-  'edit-distance': 'https://leetcode.com/problems/edit-distance/',
-  'longest-palindromic-subsequence':
-    'https://leetcode.com/problems/longest-palindromic-subsequence/',
-  'palindrome-partitioning':
-    'https://leetcode.com/problems/palindrome-partitioning/',
-  'unique-paths-ii': 'https://leetcode.com/problems/unique-paths-ii/',
-  'palindromic-substrings':
-    'https://leetcode.com/problems/palindromic-substrings/',
-  'regular-expression-matching':
-    'https://leetcode.com/problems/regular-expression-matching/',
-  'combination-sum-ii': 'https://leetcode.com/problems/combination-sum-ii/',
-  permutations: 'https://leetcode.com/problems/permutations/',
-  'permutations-ii': 'https://leetcode.com/problems/permutations-ii/',
-  subsets: 'https://leetcode.com/problems/subsets/',
-  'subsets-ii': 'https://leetcode.com/problems/subsets-ii/',
-  'letter-combinations-of-phone-number':
-    'https://leetcode.com/problems/letter-combinations-of-a-phone-number/',
-  'longest-valid-parentheses':
-    'https://leetcode.com/problems/longest-valid-parentheses/',
-  'maximal-rectangle': 'https://leetcode.com/problems/maximal-rectangle/',
-  'minimum-window-subsequence':
-    'https://leetcode.com/problems/minimum-window-subsequence/',
-  'median-of-two-sorted-arrays':
-    'https://leetcode.com/problems/median-of-two-sorted-arrays/',
-  'wildcard-matching': 'https://leetcode.com/problems/wildcard-matching/',
-  'text-justification': 'https://leetcode.com/problems/text-justification/',
-  'first-missing-positive':
-    'https://leetcode.com/problems/first-missing-positive/',
-  'largest-rectangle-in-histogram':
-    'https://leetcode.com/problems/largest-rectangle-in-histogram/',
-};
-
-// Problem data from the question bank
-const problemsData = {
-  'arrays-strings': {
-    title: 'Arrays & Strings',
-    problems: [
-      // Very High Frequency
-      {
-        name: 'Container With Most Water',
-        frequency: 'Very High',
-        fileName: 'container-with-most-water',
-        url: 'https://leetcode.com/problems/container-with-most-water/',
-      },
-      {
-        name: 'Trapping Rain Water',
-        frequency: 'Very High',
-        fileName: 'trapping-rain-water',
-        url: 'https://leetcode.com/problems/trapping-rain-water/',
-      },
-      {
-        name: '3Sum',
-        frequency: 'Very High',
-        fileName: '3sum',
-        url: 'https://leetcode.com/problems/3sum/',
-      },
-      {
-        name: 'Longest Substring Without Repeating Characters',
-        frequency: 'Very High',
-        fileName: 'longest-substring-without-repeating-characters',
-        url: 'https://leetcode.com/problems/longest-substring-without-repeating-characters/',
-      },
-      {
-        name: 'Minimum Window Substring',
-        frequency: 'Very High',
-        fileName: 'minimum-window-substring',
-        url: 'https://leetcode.com/problems/minimum-window-substring/',
-      },
-      {
-        name: 'Subarray Sum Equals K',
-        frequency: 'Very High',
-        fileName: 'subarray-sum-equals-k',
-        url: 'https://leetcode.com/problems/subarray-sum-equals-k/',
-      },
-      // High Frequency
-      {
-        name: 'Sliding Window Maximum',
-        frequency: 'High',
-        fileName: 'sliding-window-maximum',
-        url: 'https://leetcode.com/problems/sliding-window-maximum/',
-      },
-      {
-        name: 'Product of Array Except Self',
-        frequency: 'High',
-        fileName: 'product-of-array-except-self',
-        url: 'https://leetcode.com/problems/product-of-array-except-self/',
-      },
-      {
-        name: 'Group Anagrams',
-        frequency: 'High',
-        fileName: 'group-anagrams',
-        url: 'https://leetcode.com/problems/group-anagrams/',
-      },
-      {
-        name: 'Decode String',
-        frequency: 'High',
-        fileName: 'decode-string',
-        url: 'https://leetcode.com/problems/decode-string/',
-      },
-      {
-        name: 'Longest Palindromic Substring',
-        frequency: 'High',
-        fileName: 'longest-palindromic-substring',
-        url: 'https://leetcode.com/problems/longest-palindromic-substring/',
-      },
-      {
-        name: 'String to Integer (atoi)',
-        frequency: 'High',
-        fileName: 'string-to-integer-atoi',
-        url: 'https://leetcode.com/problems/string-to-integer-atoi/',
-      },
-      {
-        name: 'Longest Consecutive Sequence',
-        frequency: 'High',
-        fileName: 'longest-consecutive-sequence',
-        url: 'https://leetcode.com/problems/longest-consecutive-sequence/',
-      },
-      {
-        name: 'Valid Parentheses',
-        frequency: 'High',
-        fileName: 'valid-parentheses',
-        url: 'https://leetcode.com/problems/valid-parentheses/',
-      },
-      {
-        name: 'Generate Parentheses',
-        frequency: 'High',
-        fileName: 'generate-parentheses',
-        url: 'https://leetcode.com/problems/generate-parentheses/',
-      },
-    ],
-  },
-  trees: {
-    title: 'Trees',
-    problems: [
-      // Very High Frequency
-      {
-        name: 'Binary Tree Maximum Path Sum',
-        frequency: 'Very High',
-        fileName: 'binary-tree-maximum-path-sum',
-      },
-      {
-        name: 'Serialize and Deserialize Binary Tree',
-        frequency: 'Very High',
-        fileName: 'serialize-and-deserialize-binary-tree',
-      },
-      {
-        name: 'Lowest Common Ancestor of Binary Tree',
-        frequency: 'Very High',
-        fileName: 'lowest-common-ancestor-of-binary-tree',
-      },
-      // High Frequency
-      {
-        name: 'Validate Binary Search Tree',
-        frequency: 'High',
-        fileName: 'validate-binary-search-tree',
-      },
-      {
-        name: 'Binary Tree Level Order Traversal',
-        frequency: 'High',
-        fileName: 'binary-tree-level-order-traversal',
-      },
-      {
-        name: 'Binary Tree Right Side View',
-        frequency: 'High',
-        fileName: 'binary-tree-right-side-view',
-      },
-      {
-        name: 'Kth Smallest Element in BST',
-        frequency: 'High',
-        fileName: 'kth-smallest-element-in-bst',
-      },
-      {
-        name: 'Invert Binary Tree',
-        frequency: 'High',
-        fileName: 'invert-binary-tree',
-      },
-      {
-        name: 'Diameter of Binary Tree',
-        frequency: 'High',
-        fileName: 'diameter-of-binary-tree',
-      },
-      {
-        name: 'Binary Tree Zigzag Level Order Traversal',
-        frequency: 'High',
-        fileName: 'binary-tree-zigzag-level-order-traversal',
-      },
-      {
-        name: 'Count Complete Tree Nodes',
-        frequency: 'High',
-        fileName: 'count-complete-tree-nodes',
-      },
-      { name: 'Path Sum II', frequency: 'High', fileName: 'path-sum-ii' },
-    ],
-  },
-  graphs: {
-    title: 'Graphs',
-    problems: [
-      // Very High Frequency
-      { name: 'Word Ladder', frequency: 'Very High', fileName: 'word-ladder' },
-      {
-        name: 'Number of Islands',
-        frequency: 'Very High',
-        fileName: 'number-of-islands',
-      },
-      { name: 'Clone Graph', frequency: 'Very High', fileName: 'clone-graph' },
-      // High Frequency
-      {
-        name: 'Course Schedule II',
-        frequency: 'High',
-        fileName: 'course-schedule-ii',
-      },
-      { name: 'Word Search II', frequency: 'High', fileName: 'word-search-ii' },
-      {
-        name: 'Pacific Atlantic Water Flow',
-        frequency: 'High',
-        fileName: 'pacific-atlantic-water-flow',
-      },
-      {
-        name: 'Graph Valid Tree',
-        frequency: 'High',
-        fileName: 'graph-valid-tree',
-      },
-      {
-        name: 'Alien Dictionary',
-        frequency: 'High',
-        fileName: 'alien-dictionary',
-      },
-      {
-        name: 'Network Delay Time',
-        frequency: 'High',
-        fileName: 'network-delay-time',
-      },
-      {
-        name: 'Shortest Path in Binary Matrix',
-        frequency: 'High',
-        fileName: 'shortest-path-in-binary-matrix',
-      },
-      {
-        name: 'Rotting Oranges',
-        frequency: 'High',
-        fileName: 'rotting-oranges',
-      },
-    ],
-  },
-  'dynamic-programming': {
-    title: 'Dynamic Programming',
-    problems: [
-      // Very High Frequency
-      { name: 'Coin Change', frequency: 'Very High', fileName: 'coin-change' },
-      {
-        name: 'Longest Increasing Subsequence',
-        frequency: 'Very High',
-        fileName: 'longest-increasing-subsequence',
-      },
-      { name: 'Word Break', frequency: 'Very High', fileName: 'word-break' },
-      // High Frequency
-      {
-        name: 'House Robber II',
-        frequency: 'High',
-        fileName: 'house-robber-ii',
-      },
-      { name: 'Decode Ways', frequency: 'High', fileName: 'decode-ways' },
-      {
-        name: 'Maximum Product Subarray',
-        frequency: 'High',
-        fileName: 'maximum-product-subarray',
-      },
-      {
-        name: 'Partition Equal Subset Sum',
-        frequency: 'High',
-        fileName: 'partition-equal-subset-sum',
-      },
-      { name: 'Edit Distance', frequency: 'High', fileName: 'edit-distance' },
-      {
-        name: 'Longest Palindromic Subsequence',
-        frequency: 'High',
-        fileName: 'longest-palindromic-subsequence',
-      },
-      {
-        name: 'Palindrome Partitioning',
-        frequency: 'High',
-        fileName: 'palindrome-partitioning',
-      },
-      {
-        name: 'Unique Paths II',
-        frequency: 'High',
-        fileName: 'unique-paths-ii',
-      },
-      {
-        name: 'Palindromic Substrings',
-        frequency: 'High',
-        fileName: 'palindromic-substrings',
-      },
-      {
-        name: 'Regular Expression Matching',
-        frequency: 'High',
-        fileName: 'regular-expression-matching',
-      },
-    ],
-  },
-  backtracking: {
-    title: 'Backtracking',
-    problems: [
-      {
-        name: 'Combination Sum II',
-        frequency: 'High',
-        fileName: 'combination-sum-ii',
-      },
-      { name: 'Permutations', frequency: 'High', fileName: 'permutations' },
-      {
-        name: 'Permutations II',
-        frequency: 'High',
-        fileName: 'permutations-ii',
-      },
-      { name: 'Subsets', frequency: 'High', fileName: 'subsets' },
-      { name: 'Subsets II', frequency: 'High', fileName: 'subsets-ii' },
-      {
-        name: 'Letter Combinations of Phone Number',
-        frequency: 'High',
-        fileName: 'letter-combinations-of-phone-number',
-      },
-    ],
-  },
-  'additional-hard': {
-    title: 'Additional Hard Problems',
-    problems: [
-      {
-        name: 'Longest Valid Parentheses',
-        frequency: 'Frequently Asked',
-        fileName: 'longest-valid-parentheses',
-      },
-      {
-        name: 'Maximal Rectangle',
-        frequency: 'Frequently Asked',
-        fileName: 'maximal-rectangle',
-      },
-      {
-        name: 'Minimum Window Subsequence',
-        frequency: 'Frequently Asked',
-        fileName: 'minimum-window-subsequence',
-      },
-      {
-        name: 'Median of Two Sorted Arrays',
-        frequency: 'Frequently Asked',
-        fileName: 'median-of-two-sorted-arrays',
-      },
-      {
-        name: 'Wildcard Matching',
-        frequency: 'Frequently Asked',
-        fileName: 'wildcard-matching',
-      },
-      {
-        name: 'Text Justification',
-        frequency: 'Frequently Asked',
-        fileName: 'text-justification',
-      },
-      {
-        name: 'First Missing Positive',
-        frequency: 'Frequently Asked',
-        fileName: 'first-missing-positive',
-      },
-      {
-        name: 'Largest Rectangle in Histogram',
-        frequency: 'Frequently Asked',
-        fileName: 'largest-rectangle-in-histogram',
-      },
-    ],
-  },
-};
-
-// Mapping of categories to their folder paths
-const categoryPaths = {
-  'arrays-strings': ['arrays', 'strings'],
-  trees: ['trees'],
-  graphs: ['graphs'],
-  'dynamic-programming': ['dynamic-programming'],
-  backtracking: ['backtracking'],
-  'additional-hard': [
-    'arrays',
-    'strings',
-    'graphs',
-    'dynamic-programming',
-    'trees',
-    'math',
+// Manual progress tracking - update this list as you complete problems
+const problems = {
+  arrays: [
+    {
+      name: 'Two Sum',
+      url: 'https://leetcode.com/problems/two-sum/',
+      status: 'completed',
+      frequency: 'Very High',
+    },
+    {
+      name: 'Two Sum II',
+      url: 'https://leetcode.com/problems/two-sum-ii-input-array-is-sorted/',
+      status: 'completed',
+      frequency: 'High',
+    },
+    {
+      name: 'Three Sum',
+      url: 'https://leetcode.com/problems/3sum/',
+      status: 'completed',
+      frequency: 'Very High',
+    },
+    {
+      name: 'Trapping Rain Water',
+      url: 'https://leetcode.com/problems/trapping-rain-water/',
+      status: 'completed',
+      frequency: 'Very High',
+    },
+    {
+      name: 'Container With Most Water',
+      url: 'https://leetcode.com/problems/container-with-most-water/',
+      status: 'not-completed',
+      frequency: 'Very High',
+    },
+    {
+      name: 'Product of Array Except Self',
+      url: 'https://leetcode.com/problems/product-of-array-except-self/',
+      status: 'not-completed',
+      frequency: 'High',
+    },
+    {
+      name: 'Maximum Subarray',
+      url: 'https://leetcode.com/problems/maximum-subarray/',
+      status: 'not-completed',
+      frequency: 'High',
+    },
+    {
+      name: 'Merge Intervals',
+      url: 'https://leetcode.com/problems/merge-intervals/',
+      status: 'not-completed',
+      frequency: 'High',
+    },
+  ],
+  strings: [
+    {
+      name: 'Valid Palindrome',
+      url: 'https://leetcode.com/problems/valid-palindrome/',
+      status: 'completed',
+      frequency: 'High',
+    },
+    {
+      name: 'Longest Substring Without Repeating Characters',
+      url: 'https://leetcode.com/problems/longest-substring-without-repeating-characters/',
+      status: 'not-completed',
+      frequency: 'Very High',
+    },
+    {
+      name: 'Minimum Window Substring',
+      url: 'https://leetcode.com/problems/minimum-window-substring/',
+      status: 'not-completed',
+      frequency: 'Very High',
+    },
+    {
+      name: 'Group Anagrams',
+      url: 'https://leetcode.com/problems/group-anagrams/',
+      status: 'not-completed',
+      frequency: 'High',
+    },
+    {
+      name: 'Longest Palindromic Substring',
+      url: 'https://leetcode.com/problems/longest-palindromic-substring/',
+      status: 'not-completed',
+      frequency: 'High',
+    },
+    {
+      name: 'Valid Parentheses',
+      url: 'https://leetcode.com/problems/valid-parentheses/',
+      status: 'not-completed',
+      frequency: 'High',
+    },
+    {
+      name: 'Generate Parentheses',
+      url: 'https://leetcode.com/problems/generate-parentheses/',
+      status: 'not-completed',
+      frequency: 'High',
+    },
+    {
+      name: 'Decode String',
+      url: 'https://leetcode.com/problems/decode-string/',
+      status: 'not-completed',
+      frequency: 'High',
+    },
+  ],
+  trees: [
+    {
+      name: 'Number of Islands',
+      url: 'https://leetcode.com/problems/number-of-islands/',
+      status: 'completed',
+      frequency: 'Very High',
+    },
+    {
+      name: 'Binary Tree Inorder Traversal',
+      url: 'https://leetcode.com/problems/binary-tree-inorder-traversal/',
+      status: 'not-completed',
+      frequency: 'High',
+    },
+    {
+      name: 'Binary Tree Level Order Traversal',
+      url: 'https://leetcode.com/problems/binary-tree-level-order-traversal/',
+      status: 'not-completed',
+      frequency: 'High',
+    },
+    {
+      name: 'Maximum Depth of Binary Tree',
+      url: 'https://leetcode.com/problems/maximum-depth-of-binary-tree/',
+      status: 'not-completed',
+      frequency: 'High',
+    },
+    {
+      name: 'Validate Binary Search Tree',
+      url: 'https://leetcode.com/problems/validate-binary-search-tree/',
+      status: 'not-completed',
+      frequency: 'High',
+    },
+    {
+      name: 'Lowest Common Ancestor of Binary Tree',
+      url: 'https://leetcode.com/problems/lowest-common-ancestor-of-a-binary-tree/',
+      status: 'not-completed',
+      frequency: 'Very High',
+    },
+    {
+      name: 'Binary Tree Maximum Path Sum',
+      url: 'https://leetcode.com/problems/binary-tree-maximum-path-sum/',
+      status: 'not-completed',
+      frequency: 'Very High',
+    },
+    {
+      name: 'Serialize and Deserialize Binary Tree',
+      url: 'https://leetcode.com/problems/serialize-and-deserialize-binary-tree/',
+      status: 'not-completed',
+      frequency: 'Very High',
+    },
+  ],
+  graphs: [
+    {
+      name: 'Clone Graph',
+      url: 'https://leetcode.com/problems/clone-graph/',
+      status: 'not-completed',
+      frequency: 'Very High',
+    },
+    {
+      name: 'Course Schedule',
+      url: 'https://leetcode.com/problems/course-schedule/',
+      status: 'not-completed',
+      frequency: 'High',
+    },
+    {
+      name: 'Word Ladder',
+      url: 'https://leetcode.com/problems/word-ladder/',
+      status: 'not-completed',
+      frequency: 'Very High',
+    },
+    {
+      name: 'Pacific Atlantic Water Flow',
+      url: 'https://leetcode.com/problems/pacific-atlantic-water-flow/',
+      status: 'not-completed',
+      frequency: 'High',
+    },
+    {
+      name: 'Rotting Oranges',
+      url: 'https://leetcode.com/problems/rotting-oranges/',
+      status: 'completed',
+      frequency: 'High',
+    },
+  ],
+  'dynamic-programming': [
+    {
+      name: 'Climbing Stairs',
+      url: 'https://leetcode.com/problems/climbing-stairs/',
+      status: 'not-completed',
+      frequency: 'High',
+    },
+    {
+      name: 'Coin Change',
+      url: 'https://leetcode.com/problems/coin-change/',
+      status: 'not-completed',
+      frequency: 'Very High',
+    },
+    {
+      name: 'Longest Increasing Subsequence',
+      url: 'https://leetcode.com/problems/longest-increasing-subsequence/',
+      status: 'not-completed',
+      frequency: 'Very High',
+    },
+    {
+      name: 'Word Break',
+      url: 'https://leetcode.com/problems/word-break/',
+      status: 'not-completed',
+      frequency: 'Very High',
+    },
+    {
+      name: 'House Robber',
+      url: 'https://leetcode.com/problems/house-robber/',
+      status: 'not-completed',
+      frequency: 'High',
+    },
+    {
+      name: 'Edit Distance',
+      url: 'https://leetcode.com/problems/edit-distance/',
+      status: 'not-completed',
+      frequency: 'High',
+    },
+  ],
+  backtracking: [
+    {
+      name: 'Permutations',
+      url: 'https://leetcode.com/problems/permutations/',
+      status: 'not-completed',
+      frequency: 'High',
+    },
+    {
+      name: 'Subsets',
+      url: 'https://leetcode.com/problems/subsets/',
+      status: 'not-completed',
+      frequency: 'High',
+    },
+    {
+      name: 'Combination Sum',
+      url: 'https://leetcode.com/problems/combination-sum/',
+      status: 'not-completed',
+      frequency: 'High',
+    },
+    {
+      name: 'N-Queens',
+      url: 'https://leetcode.com/problems/n-queens/',
+      status: 'not-completed',
+      frequency: 'High',
+    },
+  ],
+  searching: [
+    {
+      name: 'Binary Search',
+      url: 'https://leetcode.com/problems/binary-search/',
+      status: 'completed',
+      frequency: 'High',
+    },
+    {
+      name: 'Search in Rotated Sorted Array',
+      url: 'https://leetcode.com/problems/search-in-rotated-sorted-array/',
+      status: 'not-completed',
+      frequency: 'High',
+    },
+    {
+      name: 'Find Minimum in Rotated Sorted Array',
+      url: 'https://leetcode.com/problems/find-minimum-in-rotated-sorted-array/',
+      status: 'not-completed',
+      frequency: 'High',
+    },
+  ],
+  'linked-lists': [
+    {
+      name: 'Singly Linked List',
+      url: '#',
+      status: 'completed',
+      frequency: 'High',
+    },
+    {
+      name: 'Reverse Linked List',
+      url: 'https://leetcode.com/problems/reverse-linked-list/',
+      status: 'not-completed',
+      frequency: 'High',
+    },
+    {
+      name: 'Merge Two Sorted Lists',
+      url: 'https://leetcode.com/problems/merge-two-sorted-lists/',
+      status: 'not-completed',
+      frequency: 'High',
+    },
+    {
+      name: 'Remove Nth Node From End',
+      url: 'https://leetcode.com/problems/remove-nth-node-from-end-of-list/',
+      status: 'not-completed',
+      frequency: 'High',
+    },
   ],
 };
 
-// State management
-let currentFilter = 'all';
-let currentStatus = 'all';
-let currentSearch = '';
-let problemsStatus = {};
+// Map categories for the HTML filter compatibility
+const categoryMapping = {
+  all: 'all',
+  'arrays-strings': ['arrays', 'strings'],
+  trees: 'trees',
+  graphs: 'graphs',
+  'dynamic-programming': 'dynamic-programming',
+  backtracking: 'backtracking',
+  'additional-hard': [
+    'arrays',
+    'strings',
+    'trees',
+    'graphs',
+    'dynamic-programming',
+  ], // Mix of hardest problems
+};
 
-// Initialize the application
-document.addEventListener('DOMContentLoaded', async function () {
-  await checkProblemsStatus();
+// Initialize the tracker
+document.addEventListener('DOMContentLoaded', function () {
   renderProblems();
-  setupEventListeners();
   updateStats();
+  setupEventListeners();
 });
 
-// Check which problems have implementations
-async function checkProblemsStatus() {
-  try {
-    // Use absolute localhost URL so it works from both file:// and http://
-    const baseUrl =
-      window.location.protocol === 'file:'
-        ? 'http://localhost:3001' // Connect to server from file://
-        : window.location.origin; // Use current origin if served by server
+function renderProblems() {
+  const container = document.getElementById('problems-container');
+  const categoryFilter = document.getElementById('category-filter').value;
+  const statusFilter = document.getElementById('status-filter').value;
+  const searchTerm = document
+    .getElementById('search-input')
+    .value.toLowerCase();
 
-    // First, get list of all existing implementations (single API call)
-    const response = await fetch(`${baseUrl}/api/list-implementations`);
+  container.innerHTML = '';
 
-    if (!response.ok) {
-      console.warn(
-        'Could not fetch implementations list - server may be offline',
-      );
-      markAllAsNotCompleted();
+  // Get categories to display based on filter
+  let categoriesToShow = [];
+  if (categoryFilter === 'all') {
+    categoriesToShow = Object.keys(problems);
+  } else if (Array.isArray(categoryMapping[categoryFilter])) {
+    categoriesToShow = categoryMapping[categoryFilter];
+  } else {
+    categoriesToShow = [categoryMapping[categoryFilter]];
+  }
+
+  categoriesToShow.forEach((category) => {
+    if (!problems[category]) return;
+
+    const categoryProblems = problems[category].filter((problem) => {
+      // Apply status filter
+      if (statusFilter !== 'all' && problem.status !== statusFilter) {
+        return false;
+      }
+
+      // Apply search filter
+      if (searchTerm && !problem.name.toLowerCase().includes(searchTerm)) {
+        return false;
+      }
+
+      return true;
+    });
+
+    if (categoryProblems.length === 0) {
       return;
     }
 
-    const existingImplementations = await response.json();
-    console.log('Found implementations:', Object.keys(existingImplementations));
-    console.log('Implementation details:', existingImplementations);
+    // Create category section
+    const categorySection = document.createElement('div');
+    categorySection.className = 'category';
 
-    // Now only check test status for files that actually exist
-    const testChecks = [];
-    for (const [fileName, languages] of Object.entries(
-      existingImplementations,
-    )) {
-      // Map file names to problem names (handle different naming conventions)
-      const problemName = mapFileToProblemName(fileName);
+    const categoryHeader = document.createElement('div');
+    categoryHeader.className = 'category-header';
 
-      // Check Node.js implementation first (if exists)
-      if (languages.nodejs) {
-        testChecks.push(
-          checkTestStatus(problemName, 'nodejs', languages.nodejs.path),
-        );
+    const categoryTitle = document.createElement('div');
+    categoryTitle.className = 'category-title';
+    categoryTitle.textContent =
+      category.charAt(0).toUpperCase() + category.slice(1).replace('-', ' ');
+
+    const categoryStats = document.createElement('div');
+    categoryStats.className = 'category-stats';
+    const completed = categoryProblems.filter(
+      (p) => p.status === 'completed',
+    ).length;
+    const attempted = categoryProblems.filter(
+      (p) => p.status === 'attempted',
+    ).length;
+    const notStarted = categoryProblems.filter(
+      (p) => p.status === 'not-completed',
+    ).length;
+    const total = categoryProblems.length;
+
+    categoryStats.innerHTML = `
+      <span>✅ ${completed}</span>
+      <span>⚠️ ${attempted}</span>
+      <span>❌ ${notStarted}</span>
+      <span>📝 ${total}</span>
+    `;
+
+    categoryHeader.appendChild(categoryTitle);
+    categoryHeader.appendChild(categoryStats);
+
+    const problemsGrid = document.createElement('div');
+    problemsGrid.className = 'problems-grid';
+
+    categoryProblems.forEach((problem) => {
+      const problemCard = document.createElement('div');
+      problemCard.className = `problem-card ${problem.status}`;
+
+      const statusIcon = document.createElement('div');
+      statusIcon.className = `status-icon ${problem.status}`;
+
+      const problemTitle = document.createElement('div');
+      problemTitle.className = 'problem-title';
+
+      const problemLink = document.createElement('a');
+      problemLink.className = 'problem-link';
+      problemLink.href = problem.url;
+      problemLink.target = '_blank';
+      problemLink.rel = 'noopener noreferrer';
+      problemLink.textContent = problem.name + ' 🔗';
+
+      problemTitle.appendChild(problemLink);
+
+      const problemFrequency = document.createElement('div');
+      problemFrequency.className = 'problem-frequency';
+      problemFrequency.textContent = `Frequency: ${problem.frequency}`;
+
+      const problemImplementations = document.createElement('div');
+      problemImplementations.className = 'problem-implementations';
+
+      const implementationTag = document.createElement('span');
+      implementationTag.className = 'implementation-tag';
+
+      if (problem.status === 'completed') {
+        implementationTag.className += ' python-tag';
+        implementationTag.textContent = 'Tests Pass ✓';
+      } else if (problem.status === 'attempted') {
+        implementationTag.className += ' nodejs-tag';
+        implementationTag.textContent = 'Tests Fail ⚠️';
+      } else {
+        implementationTag.className += ' missing-tag';
+        implementationTag.textContent = 'Not Implemented';
       }
-      // Check Python implementation if no Node.js or if Node.js tests fail
-      else if (languages.python) {
-        testChecks.push(
-          checkTestStatus(problemName, 'python', languages.python.path),
-        );
-      }
-    }
 
-    // Run all test checks in parallel (much faster)
-    const testResults = await Promise.all(testChecks);
+      problemImplementations.appendChild(implementationTag);
 
-    // Update status for files that exist
-    testResults.forEach((result) => {
-      if (result) {
-        console.log(`Setting ${result.fileName} to ${result.status}`);
-        problemsStatus[result.fileName] = result.status;
-      }
+      problemCard.appendChild(statusIcon);
+      problemCard.appendChild(problemTitle);
+      problemCard.appendChild(problemFrequency);
+      problemCard.appendChild(problemImplementations);
+
+      problemsGrid.appendChild(problemCard);
     });
 
-    console.log('Final problemsStatus:', problemsStatus);
-
-    // Set remaining problems as not-completed
-    markRemainingAsNotCompleted();
-  } catch (error) {
-    console.warn(
-      'API not available (is server running?), all problems marked as not-completed:',
-      error.message,
-    );
-    markAllAsNotCompleted();
-  }
-}
-
-// Check test status for a specific file
-async function checkTestStatus(fileName, language, filePath) {
-  try {
-    const baseUrl =
-      window.location.protocol === 'file:'
-        ? 'http://localhost:3001'
-        : window.location.origin;
-
-    const response = await fetch(`${baseUrl}/api/check-tests`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ fileName, language, filePath }),
-    });
-
-    if (response.ok) {
-      const result = await response.json();
-      return {
-        fileName,
-        status: result.testsPass ? 'completed' : 'attempted',
-      };
-    }
-  } catch (error) {
-    console.warn(`Failed to check tests for ${fileName}:`, error.message);
-  }
-
-  return { fileName, status: 'attempted' }; // File exists but can't run tests
-}
-
-// Map file names to problem names (handle different naming conventions)
-function mapFileToProblemName(fileName) {
-  const fileNameMapping = {
-    numberofislands: 'number-of-islands',
-    twosum: 'two-sum',
-    twosim: 'two-sum', // typo handling
-    binarysearch: 'binary-search',
-    singlylinkedlist: 'singly-linked-list',
-    'singly-linked-list': 'singly-linked-list',
-    // Add more mappings as needed
-  };
-
-  // Return mapped name if it exists, otherwise return the original fileName
-  return (
-    fileNameMapping[fileName.toLowerCase().replace(/[-_]/g, '')] || fileName
-  );
-}
-
-// Helper function to mark all problems as not-completed
-function markAllAsNotCompleted() {
-  for (const [categoryKey, categoryData] of Object.entries(problemsData)) {
-    for (const problem of categoryData.problems) {
-      problemsStatus[problem.fileName] = 'not-completed';
-    }
-  }
-}
-
-// Helper function to mark remaining problems as not-completed
-function markRemainingAsNotCompleted() {
-  for (const [categoryKey, categoryData] of Object.entries(problemsData)) {
-    for (const problem of categoryData.problems) {
-      if (!problemsStatus[problem.fileName]) {
-        problemsStatus[problem.fileName] = 'not-completed';
-      }
-    }
-  }
-}
-
-// Render all problems
-function renderProblems() {
-  const container = document.getElementById('problems-container');
-  container.innerHTML = '';
-
-  for (const [categoryKey, categoryData] of Object.entries(problemsData)) {
-    if (currentFilter !== 'all' && currentFilter !== categoryKey) {
-      continue;
-    }
-
-    const filteredProblems = filterProblems(categoryData.problems);
-    if (filteredProblems.length === 0) continue;
-
-    const categoryElement = createCategoryElement(
-      categoryKey,
-      categoryData,
-      filteredProblems,
-    );
-    container.appendChild(categoryElement);
-  }
-}
-
-// Filter problems based on current filters
-function filterProblems(problems) {
-  return problems.filter((problem) => {
-    const status = problemsStatus[problem.fileName];
-
-    // Status filter
-    if (currentStatus !== 'all' && status !== currentStatus) {
-      return false;
-    }
-
-    // Search filter
-    if (
-      currentSearch &&
-      !problem.name.toLowerCase().includes(currentSearch.toLowerCase())
-    ) {
-      return false;
-    }
-
-    return true;
+    categorySection.appendChild(categoryHeader);
+    categorySection.appendChild(problemsGrid);
+    container.appendChild(categorySection);
   });
 }
 
-// Create category element
-function createCategoryElement(categoryKey, categoryData, problems) {
-  const categoryDiv = document.createElement('div');
-  categoryDiv.className = 'category';
+function updateStats() {
+  let totalProblems = 0;
+  let completedProblems = 0;
 
-  // Calculate category stats
-  const completed = problems.filter(
-    (p) => problemsStatus[p.fileName] === 'completed',
-  ).length;
-  const notStarted = problems.filter(
-    (p) => problemsStatus[p.fileName] === 'not-completed',
-  ).length;
-  const total = problems.length;
-
-  categoryDiv.innerHTML = `
-        <div class="category-header">
-            <div class="category-title">${categoryData.title}</div>
-            <div class="category-stats">
-                <span>✅ ${completed}</span>
-                <span>❌ ${notStarted}</span>
-                <span>📝 ${total}</span>
-            </div>
-        </div>
-        <div class="problems-grid" id="problems-${categoryKey}">
-        </div>
-    `;
-
-  const problemsGrid = categoryDiv.querySelector(`#problems-${categoryKey}`);
-
-  problems.forEach((problem) => {
-    const problemElement = createProblemElement(problem);
-    problemsGrid.appendChild(problemElement);
+  Object.values(problems).forEach((categoryProblems) => {
+    totalProblems += categoryProblems.length;
+    completedProblems += categoryProblems.filter(
+      (p) => p.status === 'completed',
+    ).length;
   });
 
-  return categoryDiv;
+  document.getElementById('total-problems').textContent = totalProblems;
+  document.getElementById('completed-count').textContent = completedProblems;
+  document.getElementById('completion-percentage').textContent =
+    totalProblems > 0
+      ? Math.round((completedProblems / totalProblems) * 100) + '%'
+      : '0%';
 }
 
-// Create problem element
-function createProblemElement(problem) {
-  const status = problemsStatus[problem.fileName];
-  const div = document.createElement('div');
-  div.className = `problem-card ${status}`;
-
-  const implementations = getImplementationTags(problem.fileName);
-
-  // Use actual LeetCode URL from question bank
-  const leetcodeUrl =
-    problemUrls[problem.fileName] || generateLeetCodeUrl(problem.name);
-
-  div.innerHTML = `
-        <div class="status-icon ${status}"></div>
-        <div class="problem-title">
-            <a href="${leetcodeUrl}" target="_blank" rel="noopener noreferrer" class="problem-link">
-                ${problem.name} 🔗
-            </a>
-        </div>
-        <div class="problem-frequency">Frequency: ${problem.frequency}</div>
-        <div class="problem-implementations">
-            ${implementations}
-        </div>
-    `;
-
-  return div;
-}
-
-// Generate LeetCode URL from problem name
-function generateLeetCodeUrl(problemName) {
-  // Convert problem name to LeetCode URL format
-  const urlSlug = problemName
-    .toLowerCase()
-    .replace(/[()]/g, '') // Remove parentheses
-    .replace(/\s+/g, '-') // Replace spaces with hyphens
-    .replace(/[^a-z0-9-]/g, '') // Remove special characters except hyphens
-    .replace(/-+/g, '-') // Replace multiple hyphens with single
-    .replace(/^-|-$/g, ''); // Remove leading/trailing hyphens
-
-  return `https://leetcode.com/problems/${urlSlug}/`;
-}
-
-// Get implementation tags for a problem
-function getImplementationTags(fileName) {
-  const status = problemsStatus[fileName];
-
-  if (status === 'completed') {
-    return '<span class="implementation-tag python-tag">Tests Pass ✓</span>';
-  } else if (status === 'attempted') {
-    return '<span class="implementation-tag nodejs-tag">Tests Fail ⚠️</span>';
-  } else {
-    return '<span class="implementation-tag missing-tag">Not Implemented</span>';
-  }
-}
-
-// Setup event listeners
 function setupEventListeners() {
-  // Category filter
   document
     .getElementById('category-filter')
-    .addEventListener('change', function () {
-      currentFilter = this.value;
-      renderProblems();
-      updateStats();
-    });
-
-  // Status filter
+    .addEventListener('change', renderProblems);
   document
     .getElementById('status-filter')
-    .addEventListener('change', function () {
-      currentStatus = this.value;
-      renderProblems();
-      updateStats();
-    });
-
-  // Search input
+    .addEventListener('change', renderProblems);
   document
     .getElementById('search-input')
-    .addEventListener('input', function () {
-      currentSearch = this.value;
-      renderProblems();
-      updateStats();
-    });
+    .addEventListener('input', renderProblems);
 }
-
-// Update statistics
-function updateStats() {
-  const allProblems = getAllFilteredProblems();
-  const completed = allProblems.filter(
-    (p) => problemsStatus[p.fileName] === 'completed',
-  ).length;
-  const attempted = allProblems.filter(
-    (p) => problemsStatus[p.fileName] === 'attempted',
-  ).length;
-  const total = allProblems.length;
-  const percentage = total > 0 ? Math.round((completed / total) * 100) : 0;
-
-  document.getElementById('total-problems').textContent = total;
-  document.getElementById('completed-count').textContent = completed;
-  document.getElementById('completion-percentage').textContent =
-    percentage + '%';
-
-  // Add attempted count to header stats
-  const headerStats = document.querySelector('.stats');
-  let attemptedStat = document.getElementById('attempted-count');
-  if (!attemptedStat) {
-    const attemptedItem = document.createElement('div');
-    attemptedItem.className = 'stat-item';
-    attemptedItem.innerHTML = `
-      <span class="stat-number" id="attempted-count">${attempted}</span>
-      <span class="stat-label">Attempted</span>
-    `;
-    headerStats.insertBefore(attemptedItem, headerStats.children[2]);
-  } else {
-    attemptedStat.textContent = attempted;
-  }
-}
-
-// Get all problems that match current filters
-function getAllFilteredProblems() {
-  let allProblems = [];
-
-  for (const [categoryKey, categoryData] of Object.entries(problemsData)) {
-    if (currentFilter !== 'all' && currentFilter !== categoryKey) {
-      continue;
-    }
-
-    const filteredProblems = filterProblems(categoryData.problems);
-    allProblems = allProblems.concat(filteredProblems);
-  }
-
-  return allProblems;
-}
-
-// Export functions for potential use in other scripts
-window.AlgorithmTracker = {
-  checkProblemsStatus,
-  renderProblems,
-  updateStats,
-  problemsData,
-  problemsStatus,
-};

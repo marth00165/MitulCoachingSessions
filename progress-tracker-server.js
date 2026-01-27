@@ -86,7 +86,7 @@ async function getAllImplementations() {
 
   for (const dirPath of algorithmPaths) {
     try {
-      // Check main directory
+      // Check main directory for both .js and .py files
       if (fs.existsSync(dirPath)) {
         const files = fs.readdirSync(dirPath);
         for (const file of files) {
@@ -104,7 +104,7 @@ async function getAllImplementations() {
         }
       }
 
-      // Check nodejs subdirectory
+      // Also check nodejs subdirectory (for backward compatibility)
       const nodejsPath = path.join(dirPath, 'nodejs');
       if (fs.existsSync(nodejsPath)) {
         const files = fs.readdirSync(nodejsPath);
@@ -114,10 +114,13 @@ async function getAllImplementations() {
             if (!implementations[fileName]) {
               implementations[fileName] = {};
             }
-            implementations[fileName].nodejs = {
-              path: path.join(nodejsPath, file),
-              category: dirPath.split('/')[1],
-            };
+            // Don't overwrite if already exists in main directory
+            if (!implementations[fileName].nodejs) {
+              implementations[fileName].nodejs = {
+                path: path.join(nodejsPath, file),
+                category: dirPath.split('/')[1],
+              };
+            }
           }
         }
       }
@@ -148,8 +151,11 @@ async function checkImplementationStatus(fileName, language, possiblePaths) {
   let filePath = null;
   for (const basePath of possiblePaths) {
     const candidates = [
+      // Check main directory first (new structure)
       path.join(basePath, `${fileName}${extension}`),
+      // Then check nodejs subdirectory (legacy structure)
       path.join(basePath, 'nodejs', `${fileName}${extension}`),
+      // Also check python subdirectory for completeness
       path.join(basePath, 'python', `${fileName}${extension}`),
     ];
 
