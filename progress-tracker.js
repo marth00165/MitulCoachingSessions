@@ -278,7 +278,7 @@ const problems = {
     {
       name: 'Reverse Linked List',
       url: 'https://leetcode.com/problems/reverse-linked-list/',
-      status: 'not-completed',
+      status: 'completed',
       frequency: 'High',
     },
     {
