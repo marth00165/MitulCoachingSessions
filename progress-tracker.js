@@ -290,7 +290,7 @@ const problems = {
     {
       name: 'Remove Nth Node From End',
       url: 'https://leetcode.com/problems/remove-nth-node-from-end-of-list/',
-      status: 'not-completed',
+      status: 'completed',
       frequency: 'High',
     },
   ],
