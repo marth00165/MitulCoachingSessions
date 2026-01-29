@@ -36,7 +36,7 @@ const problems = {
     {
       name: 'Product of Array Except Self',
       url: 'https://leetcode.com/problems/product-of-array-except-self/',
-      status: 'not-completed',
+      status: 'completed',
       frequency: 'High',
     },
     {
