@@ -124,7 +124,7 @@ const problems = {
     {
       name: 'Maximum Depth of Binary Tree',
       url: 'https://leetcode.com/problems/maximum-depth-of-binary-tree/',
-      status: 'not-completed',
+      status: 'completed',
       frequency: 'High',
     },
     {
