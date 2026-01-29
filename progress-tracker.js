@@ -86,7 +86,7 @@ const problems = {
     {
       name: 'Valid Parentheses',
       url: 'https://leetcode.com/problems/valid-parentheses/',
-      status: 'not-completed',
+      status: 'completed',
       frequency: 'High',
     },
     {
