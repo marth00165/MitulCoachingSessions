@@ -62,7 +62,7 @@ const problems = {
     {
       name: 'Longest Substring Without Repeating Characters',
       url: 'https://leetcode.com/problems/longest-substring-without-repeating-characters/',
-      status: 'not-completed',
+      status: 'completed',
       frequency: 'Very High',
     },
     {
