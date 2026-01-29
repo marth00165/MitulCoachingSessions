@@ -30,7 +30,7 @@ const problems = {
     {
       name: 'Container With Most Water',
       url: 'https://leetcode.com/problems/container-with-most-water/',
-      status: 'not-completed',
+      status: 'completed',
       frequency: 'Very High',
     },
     {
