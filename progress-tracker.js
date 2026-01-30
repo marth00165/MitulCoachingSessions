@@ -112,7 +112,7 @@ const problems = {
     {
       name: 'Binary Tree Inorder Traversal',
       url: 'https://leetcode.com/problems/binary-tree-inorder-traversal/',
-      status: 'not-completed',
+      status: 'completed',
       frequency: 'High',
     },
     {
