@@ -162,7 +162,7 @@ const problems = {
     {
       name: 'Course Schedule',
       url: 'https://leetcode.com/problems/course-schedule/',
-      status: 'not-completed',
+      status: 'completed',
       frequency: 'High',
     },
     {

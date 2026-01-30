@@ -19,7 +19,7 @@
  * 5. Return dummy.next (the new head)
  *
  * Example with list: 1 → 2 → 3 → 4 → 5, n = 2
- * 
+ *
  * Step 1: dummy → 1 → 2 → 3 → 4 → 5, length = 5
  * Step 2: Target position from start = length - n = 5 - 2 = 3
  * Step 3: Find node at position 2 (before target): node 3
@@ -81,7 +81,7 @@ class Solution {
         prev.next = curr.next;
         break;
       }
-      
+
       // Move to next node
       prev = curr;
       curr = curr.next;
@@ -129,43 +129,55 @@ function test() {
   let list1 = createLinkedList([1, 2, 3, 4, 5]);
   let result1 = solution.removeNthFromEnd(list1, 2);
   let output1 = linkedListToArray(result1);
-  console.assert(JSON.stringify(output1) === JSON.stringify([1, 2, 3, 5]), 
-    'Test 1 failed: Expected [1,2,3,5], got ' + JSON.stringify(output1));
+  console.assert(
+    JSON.stringify(output1) === JSON.stringify([1, 2, 3, 5]),
+    'Test 1 failed: Expected [1,2,3,5], got ' + JSON.stringify(output1),
+  );
 
   // Test case 2: Remove only node [1] -> []
   let list2 = createLinkedList([1]);
   let result2 = solution.removeNthFromEnd(list2, 1);
   let output2 = linkedListToArray(result2);
-  console.assert(JSON.stringify(output2) === JSON.stringify([]), 
-    'Test 2 failed: Expected [], got ' + JSON.stringify(output2));
+  console.assert(
+    JSON.stringify(output2) === JSON.stringify([]),
+    'Test 2 failed: Expected [], got ' + JSON.stringify(output2),
+  );
 
   // Test case 3: Remove first (head) from two nodes [1,2] -> [2]
   let list3 = createLinkedList([1, 2]);
   let result3 = solution.removeNthFromEnd(list3, 2);
   let output3 = linkedListToArray(result3);
-  console.assert(JSON.stringify(output3) === JSON.stringify([2]), 
-    'Test 3 failed: Expected [2], got ' + JSON.stringify(output3));
+  console.assert(
+    JSON.stringify(output3) === JSON.stringify([2]),
+    'Test 3 failed: Expected [2], got ' + JSON.stringify(output3),
+  );
 
   // Test case 4: Remove last from two nodes [1,2] -> [1]
   let list4 = createLinkedList([1, 2]);
   let result4 = solution.removeNthFromEnd(list4, 1);
   let output4 = linkedListToArray(result4);
-  console.assert(JSON.stringify(output4) === JSON.stringify([1]), 
-    'Test 4 failed: Expected [1], got ' + JSON.stringify(output4));
+  console.assert(
+    JSON.stringify(output4) === JSON.stringify([1]),
+    'Test 4 failed: Expected [1], got ' + JSON.stringify(output4),
+  );
 
   // Test case 5: Remove middle from longer list [1,2,3,4,5,6] n=3 -> [1,2,3,5,6]
   let list5 = createLinkedList([1, 2, 3, 4, 5, 6]);
   let result5 = solution.removeNthFromEnd(list5, 3);
   let output5 = linkedListToArray(result5);
-  console.assert(JSON.stringify(output5) === JSON.stringify([1, 2, 3, 5, 6]), 
-    'Test 5 failed: Expected [1,2,3,5,6], got ' + JSON.stringify(output5));
+  console.assert(
+    JSON.stringify(output5) === JSON.stringify([1, 2, 3, 5, 6]),
+    'Test 5 failed: Expected [1,2,3,5,6], got ' + JSON.stringify(output5),
+  );
 
   // Test case 6: Remove head from longer list [1,2,3,4,5] n=5 -> [2,3,4,5]
   let list6 = createLinkedList([1, 2, 3, 4, 5]);
   let result6 = solution.removeNthFromEnd(list6, 5);
   let output6 = linkedListToArray(result6);
-  console.assert(JSON.stringify(output6) === JSON.stringify([2, 3, 4, 5]), 
-    'Test 6 failed: Expected [2,3,4,5], got ' + JSON.stringify(output6));
+  console.assert(
+    JSON.stringify(output6) === JSON.stringify([2, 3, 4, 5]),
+    'Test 6 failed: Expected [2,3,4,5], got ' + JSON.stringify(output6),
+  );
 
   console.log('✅ All Remove Nth Node From End test cases passed!');
 }
