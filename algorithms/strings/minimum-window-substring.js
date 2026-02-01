@@ -2,15 +2,15 @@
  * Problem: Minimum Window Substring
  *
  * Description:
- * Given two strings s and t, return the minimum window substring of s such that every character 
- * in t (including duplicates) is included in the window. If there is no such substring, 
+ * Given two strings s and t, return the minimum window substring of s such that every character
+ * in t (including duplicates) is included in the window. If there is no such substring,
  * return the empty string "".
  *
  * Algorithm Logic (Sliding Window with Frequency Map):
  * This solution uses the sliding window technique with character frequency tracking:
  *
- * KEY INSIGHT: Use two pointers (left, right) to maintain a window. Expand the window 
- * by moving right pointer until all characters from t are included, then shrink from 
+ * KEY INSIGHT: Use two pointers (left, right) to maintain a window. Expand the window
+ * by moving right pointer until all characters from t are included, then shrink from
  * left to find the minimum valid window.
  *
  * STEPS:
@@ -22,7 +22,7 @@
  * 6. Return the minimum window substring
  *
  * Example with s = "ADOBECODEBANC", t = "ABC"
- * 
+ *
  * Step 1: freqMap = {A: 1, B: 1, C: 1}, unmet = 3
  * Step 2: Expand window until valid:
  * - Window "ADOBEC" contains A, B, C → valid window, length = 6
@@ -71,7 +71,7 @@ class Solution {
 
     // Track how many unique characters from t still need to be satisfied
     let unmet = freqMap.size;
-    
+
     // PT 2 - Sliding window algorithm
     while (right < s.length) {
       // Expand window by including character at right pointer
@@ -89,7 +89,7 @@ class Solution {
       // PT 3 - When we have a valid window (all characters from t included)
       while (unmet === 0) {
         let currLen = right - left;
-        
+
         // Update best window if current is smaller
         if (currLen < bestLen) {
           bestLen = currLen;
@@ -100,7 +100,7 @@ class Solution {
         let leftChar = s[left];
         if (freqMap.has(leftChar)) {
           freqMap.set(leftChar, freqMap.get(leftChar) + 1);
-          
+
           // If removing this character breaks the requirement
           if (freqMap.get(leftChar) === 1) {
             unmet = unmet + 1;
@@ -112,7 +112,7 @@ class Solution {
 
     // Return result
     if (bestLen === Infinity) {
-      return "";
+      return '';
     } else {
       let end = bestStart + bestLen;
       return s.substring(bestStart, end);
@@ -125,49 +125,58 @@ function test() {
   const solution = new Solution();
 
   // Test case 1: Standard example s = "ADOBECODEBANC", t = "ABC"
-  let result1 = solution.minWindow("ADOBECODEBANC", "ABC");
-  console.assert(result1 === "BANC", 
-    'Test 1 failed: Expected "BANC", got ' + result1);
+  let result1 = solution.minWindow('ADOBECODEBANC', 'ABC');
+  console.assert(
+    result1 === 'BANC',
+    'Test 1 failed: Expected "BANC", got ' + result1,
+  );
 
   // Test case 2: No valid window s = "a", t = "aa"
-  let result2 = solution.minWindow("a", "aa");
-  console.assert(result2 === "", 
-    'Test 2 failed: Expected "", got ' + result2);
+  let result2 = solution.minWindow('a', 'aa');
+  console.assert(result2 === '', 'Test 2 failed: Expected "", got ' + result2);
 
   // Test case 3: Entire string is minimum window s = "a", t = "a"
-  let result3 = solution.minWindow("a", "a");
-  console.assert(result3 === "a", 
-    'Test 3 failed: Expected "a", got ' + result3);
+  let result3 = solution.minWindow('a', 'a');
+  console.assert(
+    result3 === 'a',
+    'Test 3 failed: Expected "a", got ' + result3,
+  );
 
   // Test case 4: Target is empty string
-  let result4 = solution.minWindow("abc", "");
-  console.assert(result4 === "", 
-    'Test 4 failed: Expected "", got ' + result4);
+  let result4 = solution.minWindow('abc', '');
+  console.assert(result4 === '', 'Test 4 failed: Expected "", got ' + result4);
 
   // Test case 5: Multiple valid windows s = "ADOBECODEBANC", t = "AABC"
-  let result5 = solution.minWindow("ADOBECODEBANC", "AABC");
-  console.assert(result5 === "ADOBEC", 
-    'Test 5 failed: Expected "ADOBEC", got ' + result5);
+  let result5 = solution.minWindow('ADOBECODEBANC', 'AABC');
+  console.assert(
+    result5 === 'ADOBEC',
+    'Test 5 failed: Expected "ADOBEC", got ' + result5,
+  );
 
   // Test case 6: Repeated characters s = "aaab", t = "aab"
-  let result6 = solution.minWindow("aaab", "aab");
-  console.assert(result6 === "aaab", 
-    'Test 6 failed: Expected "aaab", got ' + result6);
+  let result6 = solution.minWindow('aaab', 'aab');
+  console.assert(
+    result6 === 'aaab',
+    'Test 6 failed: Expected "aaab", got ' + result6,
+  );
 
   // Test case 7: Single character s = "ab", t = "b"
-  let result7 = solution.minWindow("ab", "b");
-  console.assert(result7 === "b", 
-    'Test 7 failed: Expected "b", got ' + result7);
+  let result7 = solution.minWindow('ab', 'b');
+  console.assert(
+    result7 === 'b',
+    'Test 7 failed: Expected "b", got ' + result7,
+  );
 
   // Test case 8: No common characters s = "abc", t = "def"
-  let result8 = solution.minWindow("abc", "def");
-  console.assert(result8 === "", 
-    'Test 8 failed: Expected "", got ' + result8);
+  let result8 = solution.minWindow('abc', 'def');
+  console.assert(result8 === '', 'Test 8 failed: Expected "", got ' + result8);
 
   // Test case 9: Complex case with duplicates s = "ABAACBAB", t = "ABC"
-  let result9 = solution.minWindow("ABAACBAB", "ABC");
-  console.assert(result9 === "ACB", 
-    'Test 9 failed: Expected "ACB", got ' + result9);
+  let result9 = solution.minWindow('ABAACBAB', 'ABC');
+  console.assert(
+    result9 === 'ACB',
+    'Test 9 failed: Expected "ACB", got ' + result9,
+  );
 
   console.log('✅ All Minimum Window Substring test cases passed!');
 }
