@@ -118,7 +118,7 @@ const problems = {
     {
       name: 'Binary Tree Level Order Traversal',
       url: 'https://leetcode.com/problems/binary-tree-level-order-traversal/',
-      status: 'not-completed',
+      status: 'completed',
       frequency: 'High',
     },
     {
