@@ -68,7 +68,7 @@ const problems = {
     {
       name: 'Minimum Window Substring',
       url: 'https://leetcode.com/problems/minimum-window-substring/',
-      status: 'not-completed',
+      status: 'completed',
       frequency: 'Very High',
     },
     {
