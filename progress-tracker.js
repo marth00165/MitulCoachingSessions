@@ -130,7 +130,7 @@ const problems = {
     {
       name: 'Validate Binary Search Tree',
       url: 'https://leetcode.com/problems/validate-binary-search-tree/',
-      status: 'not-completed',
+      status: 'completed',
       frequency: 'High',
     },
     {
