@@ -42,7 +42,7 @@ const problems = {
     {
       name: 'Maximum Subarray',
       url: 'https://leetcode.com/problems/maximum-subarray/',
-      status: 'not-completed',
+      status: 'completed',
       frequency: 'High',
     },
     {
