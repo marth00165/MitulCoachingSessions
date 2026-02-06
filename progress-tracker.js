@@ -48,7 +48,7 @@ const problems = {
     {
       name: 'Merge Intervals',
       url: 'https://leetcode.com/problems/merge-intervals/',
-      status: 'not-completed',
+      status: 'completed',
       frequency: 'High',
     },
   ],
